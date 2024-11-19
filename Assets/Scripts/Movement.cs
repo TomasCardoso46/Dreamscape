@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class Movement : MonoBehaviour
 {
     [SerializeField] private float _maxForwardSpeed;
     [SerializeField] private float _maxBackwardSpeed;
