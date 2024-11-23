@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Puzzle1 : MonoBehaviour
+public class Puzzle1 : MonoBehaviour, IPuzzle
 {
     public GameObject[] cubes;
     public Animation animationClip;
@@ -45,7 +45,7 @@ public class Puzzle1 : MonoBehaviour
     public void SetPuzzleActive(bool active)
     {
         isPuzzleActive = active;
-        Debug.Log(isPuzzleActive ? "Puzzle activated" : "Puzzle deactivated");
+        Debug.Log(isPuzzleActive ? "Puzzle1 activated" : "Puzzle1 deactivated");
     }
 
     private void HandleRotation()

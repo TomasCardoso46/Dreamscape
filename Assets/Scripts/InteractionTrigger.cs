@@ -5,13 +5,27 @@ public class InteractionTrigger : MonoBehaviour
     public string targetTag = "Player";
     public Transform cameraTargetPosition;
     public Camera mainCamera;
-    public Puzzle1 puzzleScript;
+    public MonoBehaviour puzzleScript;  // Use MonoBehaviour for inspector
+    private IPuzzle puzzle;  // Actual interface reference
 
     private bool isPlayerInside = false;
     private bool isInteractionActive = false;
     private Vector3 originalCameraPosition;
     private Quaternion originalCameraRotation;
     private MonoBehaviour playerMovementScript;
+
+    private void Start()
+    {
+        // Check if the assigned puzzleScript implements IPuzzle
+        if (puzzleScript is IPuzzle)
+        {
+            puzzle = puzzleScript as IPuzzle;
+        }
+        else
+        {
+            Debug.LogError("Assigned puzzleScript does not implement IPuzzle interface");
+        }
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -50,14 +64,14 @@ public class InteractionTrigger : MonoBehaviour
         {
             UnlockPlayerMovement();
             ResetCameraPosition();
-            puzzleScript.SetPuzzleActive(false);
+            puzzle?.SetPuzzleActive(false);
             Debug.Log("Puzzle deactivated, camera reset");
         }
         else
         {
             LockPlayerMovement();
             ChangeCameraPosition();
-            puzzleScript.SetPuzzleActive(true);
+            puzzle?.SetPuzzleActive(true);
             Debug.Log("Puzzle activated, camera changed position");
         }
         
