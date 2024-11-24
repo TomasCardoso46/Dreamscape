@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4549564632770431347}
   - component: {fileID: 8350097168954618174}
-  - component: {fileID: 5686248104780429817}
+  - component: {fileID: 8928889376473826898}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 1609473299627800431}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.08, z: -3}
+  m_LocalPosition: {x: 0, y: 1.08, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -59,7 +59,7 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5686248104780429817
+--- !u!114 &8928889376473826898
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -68,10 +68,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1609473299627800431}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a23e1d0dbbae24e4f98326565462cbfa, type: 3}
+  m_Script: {fileID: 11500000, guid: ffc1857200f14a946832d60910da7c65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _uiManager: {fileID: 0}
+  _maxForwardSpeed: 5
+  _maxBackwardSpeed: 3
+  _maxStrafeSpeed: 5
+  _maxLookUpAngle: 60
+  _maxLookDownAngle: 160
 --- !u!1 &5312988135856443271
 GameObject:
   m_ObjectHideFlags: 0
