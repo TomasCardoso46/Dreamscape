@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.UI;  // Make sure to import the UI namespace
+using TMPro;
 
 public class InteractionTrigger : MonoBehaviour
 {
@@ -7,6 +9,7 @@ public class InteractionTrigger : MonoBehaviour
     public Camera mainCamera;
     public MonoBehaviour puzzleScript;  // Use MonoBehaviour for inspector
     private IPuzzle puzzle;  // Actual interface reference
+    public TextMeshProUGUI interactionText;  // Reference to the UI Text component
 
     private bool isPlayerInside = false;
     private bool isInteractionActive = false;
@@ -23,7 +26,13 @@ public class InteractionTrigger : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Assigned puzzleScript does not implement IPuzzle interface");
+            Debug.LogWarning("Assigned puzzleScript does not implement IPuzzle interface");
+        }
+
+        // Initially hide the interaction text
+        if (interactionText != null)
+        {
+            interactionText.gameObject.SetActive(false);
         }
     }
 
@@ -34,6 +43,12 @@ public class InteractionTrigger : MonoBehaviour
             isPlayerInside = true;
             playerMovementScript = other.GetComponent<MonoBehaviour>();
             Debug.Log("Player entered trigger zone");
+
+            // Show the interaction text when the player enters the trigger
+            if (interactionText != null)
+            {
+                interactionText.gameObject.SetActive(true);
+            }
         }
     }
 
@@ -47,6 +62,12 @@ public class InteractionTrigger : MonoBehaviour
                 ToggleInteraction();
             }
             Debug.Log("Player exited trigger zone");
+
+            // Hide the interaction text when the player leaves the trigger
+            if (interactionText != null)
+            {
+                interactionText.gameObject.SetActive(false);
+            }
         }
     }
 
@@ -55,6 +76,12 @@ public class InteractionTrigger : MonoBehaviour
         if (isPlayerInside && Input.GetKeyDown(KeyCode.E))
         {
             ToggleInteraction();
+            
+            // Hide the interaction text once the player interacts
+            if (interactionText != null)
+            {
+                interactionText.gameObject.SetActive(false);
+            }
         }
     }
 
@@ -72,6 +99,8 @@ public class InteractionTrigger : MonoBehaviour
             LockPlayerMovement();
             ChangeCameraPosition();
             puzzle?.SetPuzzleActive(true);
+            Cursor.visible = true;
+            
             Debug.Log("Puzzle activated, camera changed position");
         }
         
