@@ -332,7 +332,7 @@ GameObject:
   - component: {fileID: 8773248276552643244}
   - component: {fileID: 3502636509799763065}
   m_Layer: 0
-  m_Name: polySurface4
+  m_Name: Cubo_A
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -539,7 +539,7 @@ GameObject:
   - component: {fileID: 5155264366583926368}
   - component: {fileID: 3717174070217578364}
   m_Layer: 0
-  m_Name: polySurface3
+  m_Name: Cubo_E
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -856,7 +856,7 @@ GameObject:
   - component: {fileID: 4313446950800553824}
   - component: {fileID: 6912193201868331873}
   m_Layer: 0
-  m_Name: polySurface5
+  m_Name: Cubo_M
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1127,7 +1127,7 @@ GameObject:
   - component: {fileID: 7216677090920307442}
   - component: {fileID: 7361225865824850077}
   m_Layer: 0
-  m_Name: polySurface2
+  m_Name: Cubo_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2395,7 +2395,7 @@ MonoBehaviour:
   - {fileID: 1345800439567127161}
   - {fileID: 609706190691461657}
   - {fileID: 2000130217373233982}
-  animator: {fileID: 0}
+  animationClip2: {fileID: 0}
 --- !u!1 &6060464926448515920
 GameObject:
   m_ObjectHideFlags: 0
@@ -2408,7 +2408,7 @@ GameObject:
   - component: {fileID: 1881717391632587302}
   - component: {fileID: 1336090894186786498}
   m_Layer: 0
-  m_Name: polySurface1
+  m_Name: Cubo_D
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3419,6 +3419,7 @@ MonoBehaviour:
   cameraTargetPosition: {fileID: 493115478636303147}
   mainCamera: {fileID: 0}
   puzzleScript: {fileID: 5755589499485996016}
+  interactionText: {fileID: 0}
 --- !u!1 &8480647849393883396
 GameObject:
   m_ObjectHideFlags: 0
