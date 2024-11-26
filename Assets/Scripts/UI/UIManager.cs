@@ -94,6 +94,11 @@ public class UIManager : MonoBehaviour
         _PsPuzzle.SetActive(false);
     }
 
+    public void ShowPSPuzzleUI()
+    {
+        _PsPuzzle.SetActive(true);
+    }
+
     public void SpawnTriangle()
     {
         AddPrefabToCombination("Triangle", trianglePrefab);
@@ -138,14 +143,16 @@ public class UIManager : MonoBehaviour
         if (IsCombinationCorrect())
         {
             Debug.Log("I won!");
+            //console animation
         }
         else
         {
             Debug.Log("You failed!");
+            ResetCombination();
         }
 
         // Reset after checking
-        ResetCombination();
+        //ResetCombination();
     }
 
     private bool IsCombinationCorrect()
@@ -174,4 +181,16 @@ public class UIManager : MonoBehaviour
         }
     }
     #endregion
+
+    public void ShowCursor()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+
+    public void HideCursor()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = true;
+    }
 }
