@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,9 +8,11 @@ public class UIManager : MonoBehaviour
 {
     [SerializeField] private GameObject _interactionPanel;
     [SerializeField] private GameObject _inventorySlotsContainer;
+    [SerializeField] private GameObject _inventoryIconsContainer;
+    [SerializeField] private GameObject _inventory;
+    [SerializeField] private GameObject _inventorySlotsUI;
     [SerializeField] private GameObject _PsPuzzle;
     [SerializeField] private GameObject _PsHint;
-    [SerializeField] private GameObject _inventoryIconsContainer;
     [SerializeField] private Color      _unselectedSlotColor;
     [SerializeField] private Color      _selectedSlotColor;
     
@@ -42,8 +45,43 @@ public class UIManager : MonoBehaviour
         //ResetInventorySlots();
         HidePSPuzzleUI();
         HidePSHintPuzzleUI();
+        HideInventorySlotsUI();
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            if (_inventory.activeSelf)
+                HideInventory();
+            else
+                ShowInventory();
+        }
+    }
+
+#region "UI Inventory"
+    public void ShowInventory()
+    {
+        _inventory.SetActive(true);
+        HideInventorySlotsUI();
+    }
+
+    public void HideInventory()
+    {
+        _inventory.SetActive(false);
+        ShowInventorySlotsUI();
+    }
+
+    public void ShowInventorySlotsUI()
+    {
+        _inventorySlotsUI.SetActive(true);
+    }
+
+    public void HideInventorySlotsUI()
+    {
+        _inventorySlotsUI.SetActive(false);
+    }
+#endregion
     public void HideInteractionPanel()
     {
         _interactionPanel.SetActive(false);
