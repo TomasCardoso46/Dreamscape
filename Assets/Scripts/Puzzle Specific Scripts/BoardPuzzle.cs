@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class BoardPuzzle : MonoBehaviour , IPuzzle
 {
+    [SerializeField] private UIManager  uiManager;
     [SerializeField] private GameObject         controllerPadImage;
     // Adjusts movement speed
     [SerializeField] private float              moveSpeed = 50f;
@@ -140,6 +141,7 @@ public class BoardPuzzle : MonoBehaviour , IPuzzle
             Debug.Log("Sequence is correct!");
             isPuzzleOver = true;
             controllerPadImage.SetActive(true);
+            uiManager.ShowPSHintPuzzleUI();
         }
         else
         {
@@ -151,19 +153,15 @@ public class BoardPuzzle : MonoBehaviour , IPuzzle
     {
         isPuzzleActive = active;
         if (active == true)
-            ShowCursor();
+        {
+            uiManager.ShowCursor();
+            if (isPuzzleOver)
+                uiManager.ShowPSHintPuzzleUI();
+        }
         else
-            HideCursor();
-    }
-    private void ShowCursor()
-    {
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
-    }
-
-    private void HideCursor()
-    {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = true;
+        {
+            uiManager.HideCursor();
+            uiManager.HidePSHintPuzzleUI();
+        }
     }
 }

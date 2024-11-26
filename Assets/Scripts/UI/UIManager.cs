@@ -8,6 +8,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject _interactionPanel;
     [SerializeField] private GameObject _inventorySlotsContainer;
     [SerializeField] private GameObject _PsPuzzle;
+    [SerializeField] private GameObject _PsHint;
     [SerializeField] private GameObject _inventoryIconsContainer;
     [SerializeField] private Color      _unselectedSlotColor;
     [SerializeField] private Color      _selectedSlotColor;
@@ -40,6 +41,7 @@ public class UIManager : MonoBehaviour
         //HideInventoryIcons();
         //ResetInventorySlots();
         HidePSPuzzleUI();
+        HidePSHintPuzzleUI();
     }
 
     public void HideInteractionPanel()
@@ -97,6 +99,16 @@ public class UIManager : MonoBehaviour
     public void ShowPSPuzzleUI()
     {
         _PsPuzzle.SetActive(true);
+    }
+
+    public void ShowPSHintPuzzleUI()
+    {
+        _PsHint.SetActive(true);
+    }
+
+    public void HidePSHintPuzzleUI()
+    {
+        _PsHint.SetActive(false);
     }
 
     public void SpawnTriangle()
