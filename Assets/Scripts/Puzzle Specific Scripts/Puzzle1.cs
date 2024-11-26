@@ -103,7 +103,7 @@ public class Puzzle1 : MonoBehaviour, IPuzzle
         if (sequence == "DREAM")
         {
             Debug.Log("Key found");
-            animationClip.Play("Chest_Open");
+            animationClip.Play("Chest_Open2");
         }
         else
         {
