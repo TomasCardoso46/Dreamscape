@@ -1,4 +1,7 @@
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEditor;  // Needed to handle quitting in the editor
+using UnityEngine.SceneManagement;  // Needed for scene management
 
 public class Movement : MonoBehaviour
 {
@@ -31,6 +34,18 @@ public class Movement : MonoBehaviour
     {
         UpdateRotation();
         UpdateHead();
+
+        // Check if the 'R' key is pressed
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Quit();
+        }
+
+        // Check if the 'Esc' key is pressed
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            ReloadScene();
+        }
     }
 
     private void UpdateRotation()
@@ -83,4 +98,21 @@ public class Movement : MonoBehaviour
         _controller.Move(_motion);
     }
 
+    public void Quit()
+    {
+        // Quit the application
+        Application.Quit();
+
+#if UNITY_EDITOR
+        // If in the editor, stop play mode
+        EditorApplication.isPlaying = false;
+#endif
+    }
+
+    public void ReloadScene()
+    {
+        // Reload the current scene
+        string currentSceneName = SceneManager.GetActiveScene().name;
+        SceneManager.LoadScene(currentSceneName);
+    }
 }
