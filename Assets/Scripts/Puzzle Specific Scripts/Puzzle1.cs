@@ -3,7 +3,7 @@ using UnityEngine;
 public class Puzzle1 : MonoBehaviour, IPuzzle
 {
     public GameObject[] cubes;
-    public Animation animationClip;
+    public Animation animationClip2;
     
     private int currentCubeIndex = 0;
     private bool isPuzzleActive = false;
@@ -103,7 +103,7 @@ public class Puzzle1 : MonoBehaviour, IPuzzle
         if (sequence == "DREAM")
         {
             Debug.Log("Key found");
-            animationClip.Play("Chest_Open2");
+            animationClip2.Play("Chest_Open2");
         }
         else
         {

@@ -6,6 +6,7 @@ public class PinChecker : MonoBehaviour, IPuzzle
     private string inputString = "";
     private const string correctPin = "34197";
     private bool isPuzzleActive = false;
+    public Animation cabinOpen;
 
     private void Start()
     {
@@ -36,6 +37,7 @@ public class PinChecker : MonoBehaviour, IPuzzle
             if (inputString == correctPin)
             {
                 Debug.Log("Victory");
+                cabinOpen.Play("Cabinet_Door_Open");
             }
             else
             {
