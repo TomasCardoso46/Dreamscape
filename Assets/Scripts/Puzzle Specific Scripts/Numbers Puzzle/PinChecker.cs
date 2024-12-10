@@ -13,7 +13,29 @@ public class PinChecker : MonoBehaviour, IPuzzle
         for (int i = 0; i < numberObjects.Length; i++)
         {
             int number = i + 1;  // Assigns numbers from 1 to 9
-            numberObjects[i].AddComponent<Clickable>().Setup(this, number.ToString());
+            numberObjects[i].name = number.ToString(); // Optional: Set object name for clarity
+        }
+    }
+
+    private void Update()
+    {
+        if (!isPuzzleActive) return;
+
+        if (Input.GetMouseButtonDown(0)) // Detect left mouse click
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out RaycastHit hit))
+            {
+                GameObject clickedObject = hit.collider.gameObject;
+                for (int i = 0; i < numberObjects.Length; i++)
+                {
+                    if (clickedObject == numberObjects[i])
+                    {
+                        OnNumberClicked((i + 1).ToString()); // Pass the number associated with the object
+                        break;
+                    }
+                }
+            }
         }
     }
 
@@ -25,7 +47,7 @@ public class PinChecker : MonoBehaviour, IPuzzle
         Debug.Log(isPuzzleActive ? "PinChecker puzzle activated" : "PinChecker puzzle deactivated");
     }
 
-    public void OnNumberClicked(string number)
+    private void OnNumberClicked(string number)
     {
         if (!isPuzzleActive) return;
 
@@ -45,22 +67,5 @@ public class PinChecker : MonoBehaviour, IPuzzle
             }
             inputString = "";  // Reset input for the next attempt
         }
-    }
-}
-
-public class Clickable : MonoBehaviour
-{
-    private PinChecker pinChecker;
-    private string number;
-
-    public void Setup(PinChecker checker, string num)
-    {
-        pinChecker = checker;
-        number = num;
-    }
-
-    private void OnMouseDown()
-    {
-        pinChecker.OnNumberClicked(number);
     }
 }
