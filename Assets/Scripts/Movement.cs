@@ -38,7 +38,7 @@ public class Movement : MonoBehaviour
         // Check if the 'R' key is pressed
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Quit();
+            //Quit();
         }
 
         // Check if the 'Esc' key is pressed
