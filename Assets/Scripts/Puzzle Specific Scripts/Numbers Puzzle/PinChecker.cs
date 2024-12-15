@@ -23,14 +23,17 @@ public class PinChecker : MonoBehaviour, IPuzzle
 
         if (Input.GetMouseButtonDown(0)) // Detect left mouse click
         {
+            Debug.Log("Clicked");
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hit))
             {
+                Debug.Log("Raycast working");
                 GameObject clickedObject = hit.collider.gameObject;
                 for (int i = 0; i < numberObjects.Length; i++)
                 {
                     if (clickedObject == numberObjects[i])
                     {
+                        Debug.Log($"{clickedObject}");
                         OnNumberClicked((i + 1).ToString()); // Pass the number associated with the object
                         break;
                     }
