@@ -1,14 +1,14 @@
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+    [SerializeField] private GameObject _pauseMenu;
     [SerializeField] private GameObject _interactionPanel;
-    [SerializeField] private GameObject _inventorySlotsContainer;
-    [SerializeField] private GameObject _inventoryIconsContainer;
+    //[SerializeField] private GameObject _inventorySlotsContainer;
+    //[SerializeField] private GameObject _inventoryIconsContainer;
     [SerializeField] private GameObject _inventory;
     [SerializeField] private GameObject _inventorySlotsUI;
     [SerializeField] private GameObject _PsPuzzle;
@@ -46,6 +46,7 @@ public class UIManager : MonoBehaviour
         HidePSPuzzleUI();
         HidePSHintPuzzleUI();
         HideInventorySlotsUI();
+        HidePauseMenu();
     }
 
     private void Update()
@@ -56,6 +57,14 @@ public class UIManager : MonoBehaviour
                 HideInventory();
             else
                 ShowInventory();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (_pauseMenu.activeSelf == false)
+                PauseGame(true);
+            else
+                PauseGame(false);
         }
     }
 
@@ -126,6 +135,11 @@ public class UIManager : MonoBehaviour
             _inventorySlots[index].color = _selectedSlotColor;
             _selectedSlotIndex = index;
         }
+    }
+
+    private void HidePauseMenu()
+    {
+        _pauseMenu.SetActive(false);
     }
 
     #region "PS Puzzle"
@@ -242,5 +256,39 @@ public class UIManager : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = true;
+    }
+
+
+    public void LeavePauseMenu()
+    {
+        if (Time.timeScale == 0)
+        {
+            _pauseMenu.SetActive(false);
+
+            Time.timeScale = 1;
+            HideCursor();
+        }
+    }
+
+    public void ExitGame()
+    {
+        Application.Quit();
+        Debug.Log("Left game");
+    }
+
+    private void PauseGame(bool _pause)
+    {
+        if (_pause)
+        {
+            _pauseMenu.SetActive(_pause);
+            Time.timeScale = 0;
+            ShowCursor();
+        }
+        else
+        {
+            HidePauseMenu();
+            Time.timeScale = 1;
+            HideCursor();
+        }
     }
 }
