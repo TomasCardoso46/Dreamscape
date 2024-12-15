@@ -6,17 +6,12 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     [SerializeField] private GameObject _pauseMenu;
-    [SerializeField] private GameObject _interactionPanel;
-    //[SerializeField] private GameObject _inventorySlotsContainer;
-    //[SerializeField] private GameObject _inventoryIconsContainer;
+    [SerializeField] private Transform _inventorySlotsContainer;
     [SerializeField] private GameObject _inventory;
     [SerializeField] private GameObject _inventorySlotsUI;
     [SerializeField] private GameObject _PsPuzzle;
     [SerializeField] private GameObject _PsHint;
-    [SerializeField] private Color      _unselectedSlotColor;
-    [SerializeField] private Color      _selectedSlotColor;
     
-
     [Header("Prefab References")]
     [SerializeField] private GameObject trianglePrefab;
     [SerializeField] private GameObject circlePrefab;
@@ -28,21 +23,28 @@ public class UIManager : MonoBehaviour
     public List<string> correctCombination = new List<string>() { "Triangle", "Circle", "Cross", "Square" }; // The correct order
     private List<string> currentCombination = new List<string>(); // Stores the player's
     
-    private TextMeshProUGUI _interactionMessage;
-    private Image[]         _inventorySlots;
-    private Image[]         _inventoryIcons;
-    private int             _selectedSlotIndex;
+    //private TextMeshProUGUI _interactionMessage;
+
+    //SerializeField of slotImages, if we got images for background.
+    private List<Image> slotImages = new List<Image>();
+
+    private void Awake()
+    {
+        if (_inventorySlotsContainer != null && slotImages.Count == 0)
+        {
+            foreach (Transform child in _inventorySlotsContainer)
+            {
+                var slotImage = child.GetComponent<Image>();
+                if (slotImage != null)
+                    slotImages.Add(slotImage);
+            }
+        }
+    }
 
     private void Start()
     {
         //_interactionMessage = GetComponentInChildren<TextMeshProUGUI>();
-        //_inventorySlots     = _inventorySlotsContainer.GetComponentsInChildren<Image>();
-        //_inventoryIcons     = _inventoryIconsContainer.GetComponentsInChildren<Image>();
-        //_selectedSlotIndex  = -1;
 
-        //HideInteractionPanel();
-        //HideInventoryIcons();
-        //ResetInventorySlots();
         HidePSPuzzleUI();
         HidePSHintPuzzleUI();
         HideInventorySlotsUI();
@@ -90,52 +92,32 @@ public class UIManager : MonoBehaviour
     {
         _inventorySlotsUI.SetActive(false);
     }
-#endregion
-    public void HideInteractionPanel()
+
+    public void UpdateInventoryUI(List<ItemData> inventory)
     {
-        _interactionPanel.SetActive(false);
+        // Limpa os slots antes de atualizar
+        for (int i = 0; i < slotImages.Count; i++)
+        {
+            if (i < inventory.Count)
+            {
+                slotImages[i].sprite = inventory[i].itemIcon;
+                slotImages[i].color = Color.white; // Torna visível o slot com o item
+            }
+            else
+            {
+                slotImages[i].sprite = null;
+                slotImages[i].color = Color.clear; // Deixa o slot vazio invisível
+            }
+        }
     }
 
-    public void ShowInteractionPanel(string message)
+#endregion
+
+    /*public void ShowInteractionPanel(string message)
     {
         _interactionMessage.text = message;
         _interactionPanel.SetActive(true);
-    }
-
-    public int GetInventorySlotCount()
-    {
-        return _inventorySlots.Length;
-    }
-
-    public void HideInventoryIcons()
-    {
-        foreach (Image image in _inventoryIcons)
-            image.enabled = false;
-    }
-
-    private void ResetInventorySlots()
-    {
-        foreach (Image image in _inventorySlots)
-            image.color = _unselectedSlotColor;
-    }
-
-    public void ShowInventoryIcon(int index, Sprite icon)
-    {
-        _inventoryIcons[index].sprite   = icon;
-        _inventoryIcons[index].enabled  = true;
-    }
-
-    public void SelectInventorySlot(int index)
-    {
-        if (_selectedSlotIndex != -1)
-            _inventorySlots[_selectedSlotIndex].color = _unselectedSlotColor;
-
-        if (index != -1)
-        {
-            _inventorySlots[index].color = _selectedSlotColor;
-            _selectedSlotIndex = index;
-        }
-    }
+    }*/
 
     private void HidePauseMenu()
     {

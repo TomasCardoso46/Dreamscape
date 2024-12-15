@@ -5,6 +5,8 @@ public class InventoryManager : MonoBehaviour
 {
     public static InventoryManager Instance;
 
+    [SerializeField] private UIManager uiManager;
+
     private List<ItemData> inventory = new List<ItemData>();
 
     private void Awake()
@@ -20,6 +22,8 @@ public class InventoryManager : MonoBehaviour
         inventory.Add(item);
         Debug.Log($"Added {item.itemName} to inventory");
         DebugInventory();
+
+        uiManager.UpdateInventoryUI(inventory);
     }
 
     public void RemoveItem(ItemData item)
@@ -29,6 +33,8 @@ public class InventoryManager : MonoBehaviour
             inventory.Remove(item);
             Debug.Log($"Removed {item.itemName} from inventory");
             DebugInventory();
+
+            uiManager.UpdateInventoryUI(inventory);
         }
     }
 

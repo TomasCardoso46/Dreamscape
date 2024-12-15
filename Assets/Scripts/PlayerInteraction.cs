@@ -12,7 +12,6 @@ public class PlayerInteraction : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(transform.position, transform.forward, out hit, interactDistance, interactableLayer))
             {
-                Debug.Log("I see a banana");
                 Interactive interactive = hit.collider.GetComponent<Interactive>();
                 if (interactive != null)
                 {
