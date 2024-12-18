@@ -28,6 +28,8 @@ public class UIManager : MonoBehaviour
     //SerializeField of slotImages, if we got images for background.
     private List<Image> slotImages = new List<Image>();
 
+    private bool isInventoryOpen;
+
     private void Awake()
     {
         if (_inventorySlotsContainer != null && slotImages.Count == 0)
@@ -56,9 +58,64 @@ public class UIManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.I))
         {
             if (_inventory.activeSelf)
+            {
+                isInventoryOpen = true;
                 HideInventory();
+            }
             else
+            {
+                isInventoryOpen = false;
                 ShowInventory();
+            }
+        }
+
+        if (isInventoryOpen)
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                Debug.Log("Key 1 was pressed while inventory is open.");
+                InventoryManager.Instance.UseItem(1);
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                Debug.Log("Key 2 was pressed while inventory is open.");
+                InventoryManager.Instance.UseItem(2);
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha3))
+            {
+                Debug.Log("Key 3 was pressed while inventory is open.");
+                InventoryManager.Instance.UseItem(3);
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha4))
+            {
+                Debug.Log("Key 4 was pressed while inventory is open.");
+                InventoryManager.Instance.UseItem(4);
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha5))
+            {
+                Debug.Log("Key 5 was pressed while inventory is open.");
+                InventoryManager.Instance.UseItem(5);
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha6))
+            {
+                Debug.Log("Key 6 was pressed while inventory is open.");
+                InventoryManager.Instance.UseItem(6);
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha7))
+            {
+                Debug.Log("Key 7 was pressed while inventory is open.");
+                InventoryManager.Instance.UseItem(7);
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha8))
+            {
+                Debug.Log("Key 8 was pressed while inventory is open.");
+                InventoryManager.Instance.UseItem(8);
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha9))
+            {
+                Debug.Log("Key 9 was pressed while inventory is open.");
+                InventoryManager.Instance.UseItem(9);
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))

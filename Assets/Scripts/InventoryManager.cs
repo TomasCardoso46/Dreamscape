@@ -6,6 +6,7 @@ public class InventoryManager : MonoBehaviour
     public static InventoryManager Instance;
 
     [SerializeField] private UIManager uiManager;
+    [SerializeField] private MusicBox musicBox;
 
     private List<ItemData> inventory = new List<ItemData>();
 
@@ -55,6 +56,26 @@ public class InventoryManager : MonoBehaviour
                 return true;
         }
         return false;
+    }
+
+    public void UseItem(int number)
+    {
+        int count = 1;
+        foreach (var item in inventory)
+        {
+            if (count == number)
+            {
+                if (item.itemType == ItemData.ItemType.Object && musicBox.IsMusicBoxActive)
+                {
+                    ItemData currentItem = item;
+                    RemoveItem(item);
+                    break;
+                }
+            }
+            count++;
+            if (count > number)
+                continue;
+        }
     }
 
 }

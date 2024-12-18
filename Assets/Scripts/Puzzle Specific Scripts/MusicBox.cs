@@ -2,15 +2,17 @@ using UnityEngine;
 
 public class MusicBox : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private bool isMusicBoxActive = false;
+
+    public bool IsMusicBoxActive {get => isMusicBoxActive;}
+
+    public void SetMusicBoxToTrue()
     {
-        
+        isMusicBoxActive = true;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void SetMusicBoxToFalse()
     {
-        
+        isMusicBoxActive = false;
     }
 }

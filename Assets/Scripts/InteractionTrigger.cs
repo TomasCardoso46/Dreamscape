@@ -44,6 +44,10 @@ public class InteractionTrigger : MonoBehaviour
             playerMovementScript = other.GetComponent<MonoBehaviour>();
             Debug.Log("Player entered trigger zone");
 
+            MusicBox musicBox = GetComponent<MusicBox>();
+            if (musicBox != null)
+                musicBox.SetMusicBoxToTrue();
+
             // Show the interaction text when the player enters the trigger
             if (interactionText != null)
             {
@@ -62,6 +66,10 @@ public class InteractionTrigger : MonoBehaviour
                 ToggleInteraction();
             }
             Debug.Log("Player exited trigger zone");
+
+            MusicBox musicBox = GetComponent<MusicBox>();
+            if (musicBox != null)
+                musicBox.SetMusicBoxToFalse();
 
             // Hide the interaction text when the player leaves the trigger
             if (interactionText != null)
