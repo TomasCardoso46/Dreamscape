@@ -30,8 +30,11 @@ public class Movement : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
     }
 
-    void Update()
+    private void Update()
     {
+        if (Time.timeScale == 0)
+            return;
+        
         UpdateRotation();
         UpdateHead();
 
