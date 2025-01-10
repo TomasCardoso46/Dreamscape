@@ -25,6 +25,7 @@ public class InventoryManager : MonoBehaviour
         DebugInventory();
 
         uiManager.UpdateInventoryUI(inventory);
+        uiManager.ShowPickedItem(item.itemName);
     }
 
     public void RemoveItem(ItemData item)

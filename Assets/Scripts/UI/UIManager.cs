@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -5,6 +6,8 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+    [SerializeField] private Transform _itemReceivedContainer;
+    [SerializeField] private GameObject _itemReceivedBg;
     [SerializeField] private GameObject _pauseMenu;
     [SerializeField] private Transform _inventorySlotsContainer;
     [SerializeField] private GameObject _inventory;
@@ -179,6 +182,24 @@ public class UIManager : MonoBehaviour
     private void HidePauseMenu()
     {
         _pauseMenu.SetActive(false);
+    }
+
+    public void ShowPickedItem(string item)
+    {
+        StartCoroutine(ShowPickedItemCO(item));
+    }
+
+    private IEnumerator ShowPickedItemCO(string item)
+    {
+        GameObject itemReceived = Instantiate(_itemReceivedBg, _itemReceivedContainer);
+        TextMeshProUGUI itemText = itemReceived.GetComponentInChildren<TextMeshProUGUI>();
+        itemText.text = $"x1 {item}";
+        yield return new WaitForSeconds(2f);
+        HideItemReceivedBg(itemReceived);
+    }
+    private void HideItemReceivedBg(GameObject itemBg)
+    {
+        itemBg.SetActive(false);
     }
 
     #region "PS Puzzle"
