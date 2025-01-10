@@ -1,9 +1,11 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class BoardPuzzle : MonoBehaviour , IPuzzle
 {
     [SerializeField] private UIManager  uiManager;
+    [SerializeField] private GameObject[] allTiles;
     [SerializeField] private GameObject         controllerPadImage;
     // Adjusts movement speed
     [SerializeField] private float              moveSpeed = 50f;
@@ -53,10 +55,9 @@ public class BoardPuzzle : MonoBehaviour , IPuzzle
 
     public void OnPieceClicked(GameObject piece)
     {
-        if (isPuzzleOver)
+        if (isPuzzleOver || !isPuzzleActive || isSwapping )
             return;
-        if (!isPuzzleActive)
-            return;
+        
         if (selectedPiece == null)
         {
             // First piece selected
@@ -140,8 +141,7 @@ public class BoardPuzzle : MonoBehaviour , IPuzzle
         {
             Debug.Log("Sequence is correct!");
             isPuzzleOver = true;
-            controllerPadImage.SetActive(true);
-            uiManager.ShowPSHintPuzzleUI();
+            StartCoroutine(ShowFinalPuzzleCO());
         }
         else
         {
@@ -162,6 +162,65 @@ public class BoardPuzzle : MonoBehaviour , IPuzzle
         {
             uiManager.HideCursor();
             uiManager.HidePSHintPuzzleUI();
+        }
+    }
+
+    private IEnumerator ShowFinalPuzzleCO()
+    {
+        // gameObject setActive true
+        controllerPadImage.SetActive(true);
+        yield return new WaitForSeconds(1f);
+        controllerPadImage.SetActive(false);
+        //gameObject SetActive false
+        SlideBoardsToLeft();
+
+        yield return new WaitForSeconds(1.5f);
+
+        controllerPadImage.SetActive(true);
+        uiManager.ShowPSHintPuzzleUI();
+    }
+
+    private void SlideBoardsToLeft()
+    {
+        StartCoroutine(SlideAllTilesToLeftCO());
+    }
+
+    private IEnumerator SlideAllTilesToLeftCO()
+    {
+        // Use the position of the first tile as the reference point
+        Vector3 basePosition = allTiles[0].transform.position;
+
+        // Duration for the sliding animation
+        float duration = 1.0f; // Adjust this value for faster/slower movement
+        float elapsedTime = 0f;
+
+        // Store the initial positions of all tiles
+        Vector3[] initialPositions = new Vector3[allTiles.Length];
+        for (int i = 0; i < allTiles.Length; i++)
+        {
+            initialPositions[i] = allTiles[i].transform.position;
+        }
+
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = elapsedTime / duration;
+
+            // Interpolate each tile's position to its target position
+            for (int i = 0; i < allTiles.Length; i++)
+            {
+                Vector3 targetPosition = basePosition + new Vector3(-i * -0.01f, 0, 0); // Spacing tiles to the left
+                allTiles[i].transform.position = Vector3.Lerp(initialPositions[i], targetPosition, t);
+            }
+
+            yield return null;
+        }
+
+        // Ensure all tiles end exactly at their target positions
+        for (int i = 0; i < allTiles.Length; i++)
+        {
+            Vector3 targetPosition = basePosition + new Vector3(-i * -0.01f, 0, 0); // Spacing
+            allTiles[i].transform.position = targetPosition;
         }
     }
 }
