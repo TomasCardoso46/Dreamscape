@@ -16,9 +16,9 @@ public class PinChecker : MonoBehaviour, IPuzzle
     [SerializeField]
     private Transform objectToRotate;
     private bool rotationCompleted = true;
-    private bool isMoving = false;
 
     [SerializeField] private float moveSpeed = 2f; // Speed for moving objects
+    private bool isResetting = false;  // Flag to track if a reset is in progress
 
     private void Start()
     {
@@ -51,7 +51,7 @@ public class PinChecker : MonoBehaviour, IPuzzle
                     {
                         Debug.Log($"{clickedObject}");
                         OnNumberClicked((i + 1).ToString()); // Pass the number associated with the object
-                        MoveNumberOnClick(numberObjects[i]); // Move the clicked number
+                         MoveNumberOnClick(numberObjects[i]);
                         break;
                     }
                 }
@@ -71,10 +71,16 @@ public class PinChecker : MonoBehaviour, IPuzzle
     {
         if (!isPuzzleActive) return;
 
+        // Prevent clicking if reset is in progress
+        if (isResetting) return;
+
         inputString += number;
         Debug.Log("Current input: " + inputString);
 
-        if (inputString.Length == 5 && isMoving == false)
+        // Disable the clicked number to prevent re-clicking
+        DisableNumber(number);
+
+        if (inputString.Length == 5)
         {
             if (inputString == correctPin)
             {
@@ -85,34 +91,64 @@ public class PinChecker : MonoBehaviour, IPuzzle
             else
             {
                 Debug.Log("Wrong pin");
-                StartCoroutine(ResetAfterDelay());
+                StartCoroutine(ResetAfterDelay()); // Start the reset after a delay
             }
             inputString = "";  // Reset input for the next attempt
-            
         }
     }
 
-    private void RotateY(float rotationDistance)
+    private IEnumerator ResetAfterDelay()
     {
-        if (rotationCompleted == false)
-        {
-            Debug.Log("Starting Rotation");
-            Quaternion targetRotation = Quaternion.Euler(0f, rotationDistance, 0f);
+        isResetting = true; // Set flag to true, blocking further interactions
 
-            objectToRotate.localRotation = Quaternion.RotateTowards(objectToRotate.localRotation, targetRotation, rotationSpeed * Time.deltaTime);
+        // Wait for 1 second before resetting
+        yield return new WaitForSeconds(1f);
+        
+        // Now reset all numbers
+        ResetAllNumbers();
+
+        // Re-enable all number objects after the reset
+        EnableAllNumbers();
+
+        isResetting = false; // Reset flag after the reset is complete
+    }
+
+    // Disables the clicked number object
+    private void DisableNumber(string number)
+    {
+        int index = int.Parse(number) - 1;
+        numberObjects[index].GetComponent<Collider>().enabled = false; // Disable collider to prevent clicking again
+    }
+
+    // Re-enables all number objects
+    private void EnableAllNumbers()
+    {
+        foreach (GameObject numberObject in numberObjects)
+        {
+            numberObject.GetComponent<Collider>().enabled = true; // Re-enable collider (or interactions)
         }
     }
 
+    // Reset all numbers' Y position to 0
+    public void ResetAllNumbers()
+    {
+        foreach (GameObject numberObject in numberObjects)
+        {
+            Vector3 destination = new Vector3(numberObject.transform.localPosition.x, 0f, numberObject.transform.localPosition.z); // Y = 0 for reset
+            StartCoroutine(MoveObjectToPosition(numberObject, destination));
+        }
+    }
+
+    // Move a specific number on the Y-axis
     private void MoveNumberOnClick(GameObject numberObject)
     {
-        Vector3 destination = new Vector3(numberObject.transform.localPosition.x, -0.00115f, numberObject.transform.localPosition.z); // Set destination Y to -0.00115f
+        Vector3 destination = new Vector3(numberObject.transform.localPosition.x, -0.00115f, numberObject.transform.localPosition.z); // Set destination Y as 1 (or any other value)
         StartCoroutine(MoveObjectToPosition(numberObject, destination));
     }
 
+    // Coroutine to move an object towards a destination
     private IEnumerator MoveObjectToPosition(GameObject numberObject, Vector3 destination)
     {
-        isMoving = true;
-        // Use a smaller threshold for small distance
         float stopThreshold = 0.0001f; // Adjust this threshold for precision
 
         while (Mathf.Abs(numberObject.transform.localPosition.y - destination.y) > stopThreshold)
@@ -124,27 +160,16 @@ public class PinChecker : MonoBehaviour, IPuzzle
 
         // Final adjustment to ensure exact position
         numberObject.transform.localPosition = destination;
-        isMoving = false;
-        
     }
 
-    private IEnumerator ResetAfterDelay()
+    private void RotateY(float rotationDistance)
     {
-        // Wait for 1 second before resetting
-        yield return new WaitForSeconds(1f);
-        
-        // Now reset all numbers
-        ResetAllNumbers();
-    }
-
-
-    // Reset all numbers' Y position to 0
-    public void ResetAllNumbers()
-    {
-        foreach (GameObject numberObject in numberObjects)
+        if (rotationCompleted == false)
         {
-            Vector3 destination = new Vector3(numberObject.transform.localPosition.x, 0f, numberObject.transform.localPosition.z); // Y = 0 for reset
-            StartCoroutine(MoveObjectToPosition(numberObject, destination));
+            Debug.Log("Starting Rotation");
+            Quaternion targetRotation = Quaternion.Euler(0f, rotationDistance, 0f);
+
+            objectToRotate.localRotation = Quaternion.RotateTowards(objectToRotate.localRotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
     }
 }
