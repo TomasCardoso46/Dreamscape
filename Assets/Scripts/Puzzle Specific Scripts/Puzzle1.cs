@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Puzzle1 : MonoBehaviour, IPuzzle
@@ -10,6 +11,9 @@ public class Puzzle1 : MonoBehaviour, IPuzzle
     private string[] letters = { "A", "R", "M", "D" };
     private string[] specialLetters = { "A", "E", "M", "D" };
     private int[] currentCubeRotations;
+    private float rotationSpeed = 180f; // Degrees per second
+    private bool isRotating = false; // To check if currently rotating
+    private Quaternion targetRotation; // Target rotation quaternion
 
     void Start()
     {
@@ -50,21 +54,37 @@ public class Puzzle1 : MonoBehaviour, IPuzzle
 
     private void HandleRotation()
     {
-        if (Input.GetKeyDown(KeyCode.W))
+        if (Input.GetKeyDown(KeyCode.W) && !isRotating)
         {
-            RotateCube(Vector3.right, 90);
-            UpdateCubeRotation(1);
-        }
-        else if (Input.GetKeyDown(KeyCode.S))
-        {
-            RotateCube(Vector3.right, -90);
+            targetRotation = cubes[currentCubeIndex].transform.rotation * Quaternion.Euler(Vector3.right * 90);
+            StartCoroutine(RotateCube(targetRotation));
             UpdateCubeRotation(-1);
+        }
+        else if (Input.GetKeyDown(KeyCode.S) && !isRotating)
+        {
+            targetRotation = cubes[currentCubeIndex].transform.rotation * Quaternion.Euler(Vector3.right * -90);
+            StartCoroutine(RotateCube(targetRotation));
+            UpdateCubeRotation(1);
         }
     }
 
-    private void RotateCube(Vector3 axis, float angle)
+    private IEnumerator RotateCube(Quaternion targetRotation)
     {
-        cubes[currentCubeIndex].transform.Rotate(axis, angle, Space.World);
+        isRotating = true; // Set the rotating flag
+        Quaternion startRotation = cubes[currentCubeIndex].transform.rotation;
+        float journeyLength = Quaternion.Angle(startRotation, targetRotation);
+        float journey = 0f;
+
+        while (journey < journeyLength)
+        {
+            journey += rotationSpeed * Time.deltaTime; // Increment journey based on speed
+            float fractionOfJourney = journey / journeyLength; // Calculate fraction of journey
+            cubes[currentCubeIndex].transform.rotation = Quaternion.Slerp(startRotation, targetRotation, fractionOfJourney); // Smoothly rotate
+            yield return null; // Wait for the next frame
+        }
+
+        cubes[currentCubeIndex].transform.rotation = targetRotation; // Ensure it ends at the target rotation
+        isRotating = false; // Reset the rotating flag
     }
 
     private void UpdateCubeRotation(int direction)
