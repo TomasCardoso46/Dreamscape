@@ -167,11 +167,11 @@ public class BoardPuzzle : MonoBehaviour , IPuzzle
 
     private IEnumerator ShowFinalPuzzleCO()
     {
-        // gameObject setActive true
-        controllerPadImage.SetActive(true);
-        yield return new WaitForSeconds(1f);
-        controllerPadImage.SetActive(false);
-        //gameObject SetActive false
+        // gameObject setActive true of whole image
+        //controllerPadImage.SetActive(true);
+        yield return new WaitForSeconds(1.5f);
+        //controllerPadImage.SetActive(false);
+        //gameObject SetActive false of whole image
         SlideBoardsToLeft();
 
         yield return new WaitForSeconds(1.5f);
