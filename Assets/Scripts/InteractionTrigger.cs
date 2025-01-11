@@ -93,7 +93,7 @@ public class InteractionTrigger : MonoBehaviour
         }
     }
 
-    private void ToggleInteraction()
+    public void ToggleInteraction()
     {
         if (isInteractionActive)
         {
