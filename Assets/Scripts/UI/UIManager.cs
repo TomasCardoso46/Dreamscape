@@ -14,6 +14,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject _inventorySlotsUI;
     [SerializeField] private GameObject _PsPuzzle;
     [SerializeField] private GameObject _PsHint;
+    [SerializeField] private ConsolePuzzle consolePuzzle;
     
     [Header("Prefab References")]
     [SerializeField] private GameObject trianglePrefab;
@@ -267,6 +268,7 @@ public class UIManager : MonoBehaviour
         if (IsCombinationCorrect())
         {
             Debug.Log("I won!");
+            consolePuzzle.OpenConsoleTop();
             //console animation
         }
         else
