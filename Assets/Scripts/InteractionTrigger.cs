@@ -16,6 +16,8 @@ public class InteractionTrigger : MonoBehaviour
     private Vector3 originalCameraPosition;
     private Quaternion originalCameraRotation;
     private MonoBehaviour playerMovementScript;
+    [SerializeField]
+    private Collider targetCollider;
 
     private void Start()
     {
@@ -99,6 +101,7 @@ public class InteractionTrigger : MonoBehaviour
         {
             UnlockPlayerMovement();
             ResetCameraPosition();
+            ActivateCollider();
             puzzle?.SetPuzzleActive(false);
             Debug.Log("Puzzle deactivated, camera reset");
         }
@@ -106,6 +109,7 @@ public class InteractionTrigger : MonoBehaviour
         {
             LockPlayerMovement();
             ChangeCameraPosition();
+            DeactivateCollider();
             puzzle?.SetPuzzleActive(true);
             Cursor.visible = true;
             
@@ -150,5 +154,29 @@ public class InteractionTrigger : MonoBehaviour
         mainCamera.transform.position = originalCameraPosition;
         mainCamera.transform.rotation = originalCameraRotation;
         Debug.Log("Camera reset to original position");
+    }
+    public void DeactivateCollider()
+    {
+        if (targetCollider != null)
+        {
+            targetCollider.enabled = false;
+            Debug.Log("Collider deactivated.");
+        }
+        else
+        {
+            Debug.LogWarning("No collider assigned!");
+        }
+    }
+    public void ActivateCollider()
+    {
+        if (targetCollider != null)
+        {
+            targetCollider.enabled = true;
+            Debug.Log("Collider activated.");
+        }
+        else
+        {
+            Debug.LogWarning("No collider assigned!");
+        }
     }
 }
