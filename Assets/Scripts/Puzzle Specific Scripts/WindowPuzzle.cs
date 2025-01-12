@@ -13,7 +13,10 @@ public class WindowPuzzle : MonoBehaviour, IPuzzle
     private float targetZ = 10f; // Target x-coordinate to stop moving
     [SerializeField]
     private GameObject objectToMove;
+    [SerializeField]
     private InteractionTriggerWindow interWindow;
+    [SerializeField]
+    private GameObject childToActivate;
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
@@ -30,6 +33,7 @@ public class WindowPuzzle : MonoBehaviour, IPuzzle
                     isWindowLocked = false;
                     MoveObjectToRight();
                     interWindow.canReachOut = true;
+                    interWindow.ToggleInteraction();
                 }
                 else
                 {
@@ -76,5 +80,17 @@ public class WindowPuzzle : MonoBehaviour, IPuzzle
 
         // Final adjustment to ensure exact position
         movingObject.transform.localPosition = destination;
+    }
+
+    // Method to activate the specified child
+    public void ActivateSpecifiedChild()
+    {
+        childToActivate.SetActive(true);
+        Debug.Log($"{childToActivate.name} has been activated.");
+    }
+    public void DeactivateSpecifiedChild()
+    {
+        childToActivate.SetActive(false);
+        Debug.Log($"{childToActivate.name} has been activated");
     }
 }

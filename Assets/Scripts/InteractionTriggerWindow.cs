@@ -13,6 +13,7 @@ public class InteractionTriggerWindow : MonoBehaviour
     public TextMeshProUGUI interactionText;  // Reference to the UI Text component
 
     private bool isPlayerInside = false;
+    [SerializeField] private string GlassesItemName = "Glasses";
     private bool isInteractionActive = false;
     private Vector3 originalCameraPosition;
     private Quaternion originalCameraRotation;
@@ -20,6 +21,8 @@ public class InteractionTriggerWindow : MonoBehaviour
     [SerializeField]
     private Collider targetCollider;
     public bool canReachOut = false;
+    public WindowPuzzle windowPuzzle;
+    private bool hasGlasses = false;
 
     private void Start()
     {
@@ -85,6 +88,10 @@ public class InteractionTriggerWindow : MonoBehaviour
 
     private void Update()
     {
+        if (InventoryManager.Instance.HasItem(GlassesItemName))
+        {
+            hasGlasses = true;
+        }
         if (isPlayerInside && Input.GetKeyDown(KeyCode.E))
         {
             ToggleInteraction();
@@ -106,6 +113,10 @@ public class InteractionTriggerWindow : MonoBehaviour
             ActivateCollider();
             puzzle?.SetPuzzleActive(false);
             Debug.Log("Puzzle deactivated, camera reset");
+            if (canReachOut == true && hasGlasses == false)
+            {
+                windowPuzzle.DeactivateSpecifiedChild();
+            }
         }
         else
         {
@@ -114,8 +125,11 @@ public class InteractionTriggerWindow : MonoBehaviour
             DeactivateCollider();
             puzzle?.SetPuzzleActive(true);
             Cursor.visible = true;
-            
             Debug.Log("Puzzle activated, camera changed position");
+            if (canReachOut == true && hasGlasses == false)
+            {
+                windowPuzzle.ActivateSpecifiedChild();
+            }
         }
         
         isInteractionActive = !isInteractionActive;
