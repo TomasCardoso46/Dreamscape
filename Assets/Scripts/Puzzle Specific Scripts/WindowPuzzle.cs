@@ -4,13 +4,16 @@ using UnityEngine;
 public class WindowPuzzle : MonoBehaviour, IPuzzle
 {
     private bool isPuzzleActive = false;
-    private bool isWindowLocked = true;
+    [SerializeField] private LayerMask interactableLayer;
+    [SerializeField] private string ClipItemName = "HairClip";
+    public bool isWindowLocked = true;
     [SerializeField]
     private float speed = 5f; // Speed at which the object moves
     [SerializeField]
     private float targetZ = 10f; // Target x-coordinate to stop moving
     [SerializeField]
     private GameObject objectToMove;
+    private InteractionTriggerWindow interWindow;
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
@@ -20,21 +23,27 @@ public class WindowPuzzle : MonoBehaviour, IPuzzle
 
             if (Physics.Raycast(ray, out hit) && hit.collider.CompareTag("WindowLock"))
             {
-                /*if (InventoryManager.Instance.HasItem(keyItemName))
+                if (InventoryManager.Instance.HasItem(ClipItemName))
                 {
+                    Debug.Log("Window Unlocked");
                     Destroy(hit.collider.gameObject);
-                    Debug.Log("Monster destroyed using key.");
-                    SetPuzzleActive(false); // Deactivate puzzle after destroying monster
+                    isWindowLocked = false;
+                    MoveObjectToRight();
+                    interWindow.canReachOut = true;
                 }
                 else
                 {
-                    Debug.Log("You need a key to destroy the monster.");
-                }*/
-                Debug.Log("Window Unlocked");
-                Destroy(hit.collider.gameObject);
-                isWindowLocked = false;
-                MoveObjectToRight();
+                    Debug.Log("Still locked");
+                }
             }
+            
+            if (Physics.Raycast(ray, out hit, 100, interactableLayer))
+            {
+                Debug.Log("Clip clicked");
+                Interactive interactive = hit.collider.GetComponent<Interactive>();
+                interactive.Interact();
+            }
+            
         }
     }
 
