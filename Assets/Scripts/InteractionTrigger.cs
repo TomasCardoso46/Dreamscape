@@ -112,7 +112,6 @@ public class InteractionTrigger : MonoBehaviour
             DeactivateCollider();
             puzzle?.SetPuzzleActive(true);
             Cursor.visible = true;
-            
             Debug.Log("Puzzle activated, camera changed position");
         }
         

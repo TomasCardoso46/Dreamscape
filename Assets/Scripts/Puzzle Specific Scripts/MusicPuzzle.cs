@@ -13,11 +13,81 @@ public class MusicPuzzle : MonoBehaviour, IPuzzle
     private bool nutcrackerCompleted = false;
     private bool leverCompleted = false;
     private bool isActive = false;
-     private float leverRotation = 0f;
+    private float leverRotation = 0f;
+    [SerializeField]
+    private Transform targetTransform;
+    [SerializeField]
+    private GameObject objectToMove;
+    private Vector3 originalPosition;
+    private Quaternion originalRotation;
+    private bool isDown = true;
+    [SerializeField]
+    private float rotationSpeed;
+    [SerializeField]
+    private float rotationSpeed2;
+    private bool rotationCompleted;
+    [SerializeField]
+    private Transform objectToRotate;
+    [SerializeField]
+    private float rotationDistance;
+    [SerializeField]
+    private GameObject RedGear;
+    [SerializeField]
+    private GameObject YellowGear;
+    [SerializeField]
+    private GameObject GreenGear;
+    private string GearGreenItemName = "EngrenagemVerde";
+    private string GearRedItemName = "EngrenagemVermelha";
+    private int gearsPlaced = 0;
+    [SerializeField]
+    private bool puzzleStarted = false;
 
+    void Start()
+    {
+        originalPosition = objectToMove.transform.position;
+        originalRotation = objectToMove.transform.rotation;
+    }
     void Update()
     {
-        if (isActive && Input.GetKey(KeyCode.D))
+
+
+        if (Input.GetMouseButton(1) && puzzleStarted == true)
+        {
+            RotateObjectWithMouse();
+        }
+
+        if (Input.GetMouseButton(0))
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit) && hit.collider.CompareTag("MusicDoor"))
+            {
+                RotateY();
+            }
+            else if (Physics.Raycast(ray,out hit) && hit.collider.CompareTag("GearGreen"))
+            {
+                Debug.Log("Green gear place hit");
+                if(InventoryManager.Instance.HasItem(GearGreenItemName))
+                {
+                    Debug.Log("Green gear placed");
+                    ActivateObject(GreenGear);
+                    gearsPlaced++;
+                }
+            }
+            else if (Physics.Raycast(ray,out hit) && hit.collider.CompareTag("GearRed"))
+            {
+                Debug.Log("Red gear place hit");
+                if(InventoryManager.Instance.HasItem(GearRedItemName))
+                {
+                    Debug.Log("Red gear placed");
+                    ActivateObject(RedGear);
+                    gearsPlaced++;
+                }
+            }
+        }
+
+        if (puzzleStarted == true && Input.GetKey(KeyCode.D) && gearsPlaced > 1)
         {
 
             if (!topCompleted)
@@ -27,8 +97,8 @@ public class MusicPuzzle : MonoBehaviour, IPuzzle
             }
             if (!nutcrackerCompleted)
             {
-                nutcracker.localPosition = Vector3.MoveTowards(nutcracker.localPosition, new Vector3(nutcracker.localPosition.x, 0.0275f, nutcracker.localPosition.z), nutcrackerMoveSpeed * Time.deltaTime);
-                if (Mathf.Approximately(nutcracker.localPosition.y, 0.0275f)) nutcrackerCompleted = true;
+                nutcracker.localPosition = Vector3.MoveTowards(nutcracker.localPosition, new Vector3(nutcracker.localPosition.x, 0.005f, nutcracker.localPosition.z), nutcrackerMoveSpeed * Time.deltaTime);
+                if (Mathf.Approximately(nutcracker.localPosition.y, 0.005f)) nutcrackerCompleted = true;
             }
             if (!leverCompleted)
             {
@@ -42,12 +112,68 @@ public class MusicPuzzle : MonoBehaviour, IPuzzle
 
     public void SetPuzzleActive(bool isActive)
     {
-        this.isActive = isActive;
-        if (!isActive)
+        Cursor.visible = isActive;  // Show cursor when puzzle is active
+        Cursor.lockState = isActive ? CursorLockMode.None : CursorLockMode.Locked;  // Unlock cursor when active
+        topCompleted = false;
+        nutcrackerCompleted = false;
+        leverCompleted = false;
+        Debug.Log($"isActive = {isActive}");
+        if (isActive == true)
         {
-            topCompleted = false;
-            nutcrackerCompleted = false;
-            leverCompleted = false;
+            ChangePosition();
+            puzzleStarted = true;
         }
+        else
+        {
+            ResetPositionAndRotation();
+            puzzleStarted = false;
+        }
+    }
+
+    public void ChangePosition()
+    {
+            objectToMove.transform.position = targetTransform.position;
+    }
+
+    public void ResetPositionAndRotation()
+    {
+        if (objectToMove != null)
+        {
+            // Reset position and rotation to the original values
+            objectToMove.transform.position = originalPosition;
+            objectToMove.transform.rotation = originalRotation;
+        }
+        else
+        {
+            Debug.LogWarning("No object assigned to reset!");
+        }
+    }
+
+    private void RotateObjectWithMouse()
+    {
+        // Get the mouse movement
+        float mouseX = Input.GetAxis("Mouse X");
+        float mouseY = Input.GetAxis("Mouse Y");
+
+        // Rotate the object based on mouse movement
+        objectToMove.transform.Rotate(Vector3.up, mouseX * -rotationSpeed, Space.World);
+        objectToMove.transform.Rotate(Vector3.left, mouseY * -rotationSpeed, Space.World);
+    }
+
+    private void RotateY()
+    {
+        if (rotationCompleted == false)
+        {
+            Debug.Log("Starting Rotation");
+            Quaternion targetRotation = Quaternion.Euler(0f, rotationDistance, 0f);
+
+            objectToRotate.localRotation = Quaternion.RotateTowards(objectToRotate.localRotation, targetRotation, rotationSpeed2 * Time.deltaTime);
+        }
+    }
+
+    public void ActivateObject(GameObject objectToActivate)
+    {
+        objectToActivate.SetActive(true);
+        Debug.Log($"{objectToActivate.name} has been activated.");
     }
 }

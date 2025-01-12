@@ -7,6 +7,9 @@ TagManager:
   - Banana
   - Monster
   - WindowLock
+  - MusicDoor
+  - GearRed
+  - GearGreen
   layers:
   - Default
   - TransparentFX
