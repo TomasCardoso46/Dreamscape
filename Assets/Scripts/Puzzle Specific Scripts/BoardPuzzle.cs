@@ -155,13 +155,11 @@ public class BoardPuzzle : MonoBehaviour , IPuzzle
         if (active == true)
         {
             uiManager.ShowCursor();
-            if (isPuzzleOver)
-                uiManager.ShowPSHintPuzzleUI();
         }
         else
         {
             uiManager.HideCursor();
-            uiManager.HidePSHintPuzzleUI();
+            //uiManager.HidePSHintPuzzleUI();
         }
     }
 
@@ -177,7 +175,6 @@ public class BoardPuzzle : MonoBehaviour , IPuzzle
         yield return new WaitForSeconds(1.5f);
 
         controllerPadImage.SetActive(true);
-        uiManager.ShowPSHintPuzzleUI();
     }
 
     private void SlideBoardsToLeft()
