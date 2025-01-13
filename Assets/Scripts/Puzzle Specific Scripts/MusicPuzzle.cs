@@ -39,9 +39,10 @@ public class MusicPuzzle : MonoBehaviour, IPuzzle
     private GameObject GreenGear;
     private string GearGreenItemName = "EngrenagemVerde";
     private string GearRedItemName = "EngrenagemVermelha";
-    private int gearsPlaced = 0;
     [SerializeField]
     private bool puzzleStarted = false;
+    private bool greenGearPlaced = false;
+    private bool redGearPlaced = false;
 
     void Start()
     {
@@ -68,26 +69,26 @@ public class MusicPuzzle : MonoBehaviour, IPuzzle
             else if (Physics.Raycast(ray,out hit) && hit.collider.CompareTag("GearGreen"))
             {
                 Debug.Log("Green gear place hit");
-                if(InventoryManager.Instance.HasItem(GearGreenItemName))
+                if(InventoryManager.Instance.HasItem(GearGreenItemName) && greenGearPlaced == false)
                 {
                     Debug.Log("Green gear placed");
                     ActivateObject(GreenGear);
-                    gearsPlaced++;
+                    greenGearPlaced = true;
                 }
             }
             else if (Physics.Raycast(ray,out hit) && hit.collider.CompareTag("GearRed"))
             {
                 Debug.Log("Red gear place hit");
-                if(InventoryManager.Instance.HasItem(GearRedItemName))
+                if(InventoryManager.Instance.HasItem(GearRedItemName) && redGearPlaced == false)
                 {
                     Debug.Log("Red gear placed");
                     ActivateObject(RedGear);
-                    gearsPlaced++;
+                    redGearPlaced = true;
                 }
             }
         }
 
-        if (puzzleStarted == true && Input.GetKey(KeyCode.D) && gearsPlaced > 1)
+        if (puzzleStarted == true && Input.GetKey(KeyCode.D) && greenGearPlaced == true && redGearPlaced == true)
         {
 
             if (!topCompleted)
