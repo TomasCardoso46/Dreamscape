@@ -4,7 +4,8 @@ using TMPro;
 
 public class Lights : MonoBehaviour
 {
-    [SerializeField] private GameObject topWindows;
+    [SerializeField] private Light ceilingLamp;
+    [SerializeField] private Light exitLamp;
     [SerializeField] private Transform lightSwitch;
     [SerializeField] private Light directionalLight;
     private Material defaultSkybox;
@@ -32,7 +33,8 @@ public class Lights : MonoBehaviour
         lightSwitch.transform.rotation = Quaternion.Euler(-35f, 
             lightSwitch.transform.eulerAngles.y, lightSwitch.transform.eulerAngles.z);
 
-        topWindows.SetActive(false);
+        ceilingLamp.gameObject.SetActive(false);
+        exitLamp.gameObject.SetActive(false);
     }
 
     private void Update()
@@ -86,7 +88,9 @@ public class Lights : MonoBehaviour
             lightSwitch.transform.eulerAngles.y, lightSwitch.transform.eulerAngles.z);
         directionalLight.intensity = (directionalLight.intensity == 0) ? 1 : 0;
         SetAmbientIntensityAndSkybox(0f, null);
-        topWindows.SetActive(true);
+
+        ceilingLamp.gameObject.SetActive(true);
+        exitLamp.gameObject.SetActive(true);
 
         isDark = true;
 
@@ -116,7 +120,10 @@ public class Lights : MonoBehaviour
         directionalLight.intensity = (directionalLight.intensity == 0) ? 1 : 0;
         RenderSettings.skybox = defaultSkybox;
         RestoreDefaults();
-        topWindows.SetActive(false);
+        
+        ceilingLamp.gameObject.SetActive(false);
+        exitLamp.gameObject.SetActive(false);
+
         isDark = false;
 
         interactionText.gameObject.SetActive(false);
