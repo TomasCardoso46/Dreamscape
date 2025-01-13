@@ -10,6 +10,11 @@ TagManager:
   - MusicDoor
   - GearRed
   - GearGreen
+  - RedLock
+  - GreenLock
+  - BlueLock
+  - YellowLock
+  - PurpleLock
   layers:
   - Default
   - TransparentFX
@@ -18,7 +23,7 @@ TagManager:
   - Water
   - UI
   - Item
-  - 
+  - Player
   - 
   - 
   - 

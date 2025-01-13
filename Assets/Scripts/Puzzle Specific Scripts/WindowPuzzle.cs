@@ -5,7 +5,7 @@ public class WindowPuzzle : MonoBehaviour, IPuzzle
 {
     private bool isPuzzleActive = false;
     [SerializeField] private LayerMask interactableLayer;
-    [SerializeField] private string ClipItemName = "HairClip";
+    private string ClipItemName = "PaperClip";
     public bool isWindowLocked = true;
     [SerializeField]
     private float speed = 5f; // Speed at which the object moves
