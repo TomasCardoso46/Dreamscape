@@ -17,7 +17,9 @@ public class InteractionTrigger : MonoBehaviour
     private Quaternion originalCameraRotation;
     private MonoBehaviour playerMovementScript;
     [SerializeField]
-    private Collider targetCollider;
+    private Collider targetCollider1;
+    [SerializeField]
+    private Collider targetCollider2;
 
     private void Start()
     {
@@ -101,7 +103,8 @@ public class InteractionTrigger : MonoBehaviour
         {
             UnlockPlayerMovement();
             ResetCameraPosition();
-            ActivateCollider();
+            ActivateCollider(targetCollider1);
+            ActivateCollider(targetCollider2);
             puzzle?.SetPuzzleActive(false);
             Debug.Log("Puzzle deactivated, camera reset");
         }
@@ -109,7 +112,8 @@ public class InteractionTrigger : MonoBehaviour
         {
             LockPlayerMovement();
             ChangeCameraPosition();
-            DeactivateCollider();
+            DeactivateCollider(targetCollider1);
+            DeactivateCollider(targetCollider2);
             puzzle?.SetPuzzleActive(true);
             Cursor.visible = true;
             Debug.Log("Puzzle activated, camera changed position");
@@ -154,11 +158,11 @@ public class InteractionTrigger : MonoBehaviour
         mainCamera.transform.rotation = originalCameraRotation;
         Debug.Log("Camera reset to original position");
     }
-    public void DeactivateCollider()
+    public void DeactivateCollider(Collider colliderToDeactivate)
     {
-        if (targetCollider != null)
+        if (colliderToDeactivate != null)
         {
-            targetCollider.enabled = false;
+            colliderToDeactivate.enabled = false;
             Debug.Log("Collider deactivated.");
         }
         else
@@ -166,11 +170,11 @@ public class InteractionTrigger : MonoBehaviour
             Debug.LogWarning("No collider assigned!");
         }
     }
-    public void ActivateCollider()
+    public void ActivateCollider(Collider colliderToActivate)
     {
-        if (targetCollider != null)
+        if (colliderToActivate != null)
         {
-            targetCollider.enabled = true;
+            colliderToActivate.enabled = true;
             Debug.Log("Collider activated.");
         }
         else

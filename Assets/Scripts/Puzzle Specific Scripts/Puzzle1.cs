@@ -14,6 +14,8 @@ public class Puzzle1 : MonoBehaviour, IPuzzle
     private float rotationSpeed = 180f; // Degrees per second
     private bool isRotating = false; // To check if currently rotating
     private Quaternion targetRotation; // Target rotation quaternion
+    [SerializeField]
+    private InteractionTrigger interactionTrigger;
 
     void Start()
     {
@@ -122,7 +124,7 @@ public class Puzzle1 : MonoBehaviour, IPuzzle
 
         if (sequence == "DREAM")
         {
-            Debug.Log("Key found");
+            interactionTrigger.ToggleInteraction();
             animationClip2.Play("Chest_Open2");
         }
         else

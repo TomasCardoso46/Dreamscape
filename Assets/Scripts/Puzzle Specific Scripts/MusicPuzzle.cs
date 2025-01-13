@@ -18,7 +18,8 @@ public class MusicPuzzle : MonoBehaviour, IPuzzle
     private Transform targetTransform;
     [SerializeField]
     private GameObject objectToMove;
-    private Vector3 originalPosition;
+    [SerializeField]
+    private Transform originalPosition;
     private Quaternion originalRotation;
     private bool isDown = true;
     [SerializeField]
@@ -44,7 +45,6 @@ public class MusicPuzzle : MonoBehaviour, IPuzzle
 
     void Start()
     {
-        originalPosition = objectToMove.transform.position;
         originalRotation = objectToMove.transform.rotation;
     }
     void Update()
@@ -140,7 +140,7 @@ public class MusicPuzzle : MonoBehaviour, IPuzzle
         if (objectToMove != null)
         {
             // Reset position and rotation to the original values
-            objectToMove.transform.position = originalPosition;
+            objectToMove.transform.position = originalPosition.position;
             objectToMove.transform.rotation = originalRotation;
         }
         else
