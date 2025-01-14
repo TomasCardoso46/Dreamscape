@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6952bdc82cacce14da614dd7b045fe20, type: 3}
   m_Name: Key_Purple
   m_EditorClassIdentifier: 
-  itemName: Key_Purple
+  itemName: Magenta Key
   itemIcon: {fileID: 21300000, guid: f45c79e5bb3d3274c92e30b5527f0d8f, type: 3}
   itemType: 0

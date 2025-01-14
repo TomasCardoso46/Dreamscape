@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6952bdc82cacce14da614dd7b045fe20, type: 3}
   m_Name: Key_Green
   m_EditorClassIdentifier: 
-  itemName: Key_Green
+  itemName: Green  Key
   itemIcon: {fileID: 21300000, guid: 8d2edb92e58613743a817f4720b23d4f, type: 3}
   itemType: 0

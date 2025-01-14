@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6952bdc82cacce14da614dd7b045fe20, type: 3}
   m_Name: PaperClip
   m_EditorClassIdentifier: 
-  itemName: PaperClip
+  itemName: Paper Clip
   itemIcon: {fileID: 21300000, guid: ad5f33c392cf21347973aeda5355c19d, type: 3}
   itemType: 1
