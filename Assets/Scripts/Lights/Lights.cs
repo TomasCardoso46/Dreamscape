@@ -92,6 +92,7 @@ public class Lights : MonoBehaviour
         directionalLight.intensity = (directionalLight.intensity == 0) ? 1 : 0;
         SetAmbientIntensityAndSkybox(0f, nightSkybox);
 
+        AudioManager.Instance.PlaySFX(13);
         ceilingLamp.gameObject.SetActive(true);
         exitLamp.gameObject.SetActive(true);
         monster.SetActive(true);
@@ -125,6 +126,7 @@ public class Lights : MonoBehaviour
         RenderSettings.skybox = defaultSkybox;
         RestoreDefaults();
         
+        AudioManager.Instance.PlaySFX(13);
         ceilingLamp.gameObject.SetActive(false);
         exitLamp.gameObject.SetActive(false);
         monster.SetActive(false);

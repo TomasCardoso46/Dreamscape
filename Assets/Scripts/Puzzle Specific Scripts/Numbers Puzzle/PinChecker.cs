@@ -51,7 +51,8 @@ public class PinChecker : MonoBehaviour, IPuzzle
                     {
                         Debug.Log($"{clickedObject}");
                         OnNumberClicked((i + 1).ToString()); // Pass the number associated with the object
-                         MoveNumberOnClick(numberObjects[i]);
+                        MoveNumberOnClick(numberObjects[i]);
+                        AudioManager.Instance.PlaySFX(11);
                         break;
                     }
                 }
@@ -84,12 +85,15 @@ public class PinChecker : MonoBehaviour, IPuzzle
         {
             if (inputString == correctPin)
             {
+                AudioManager.Instance.PlaySFX(1);
+                AudioManager.Instance.PlaySFX(15);
                 Debug.Log("Victory");
                 rotationCompleted = false;
                 interactionTrigger.ToggleInteraction();
             }
             else
             {
+                AudioManager.Instance.PlaySFX(2);
                 Debug.Log("Wrong pin");
                 StartCoroutine(ResetAfterDelay()); // Start the reset after a delay
             }

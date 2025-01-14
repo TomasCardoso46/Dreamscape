@@ -30,6 +30,8 @@ public class WindowPuzzle : MonoBehaviour, IPuzzle
                 {
                     InventoryManager.Instance.UseItemWithString(ClipItemName);
                     Debug.Log("Window Unlocked");
+                    AudioManager.Instance.PlaySFX(6);
+                    AudioManager.Instance.PlaySFX(14);
                     Destroy(hit.collider.gameObject);
                     isWindowLocked = false;
                     MoveObjectToRight();

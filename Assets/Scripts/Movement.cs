@@ -10,6 +10,8 @@ public class Movement : MonoBehaviour
     [SerializeField] private float _maxStrafeSpeed;
     [SerializeField] private float _maxLookUpAngle;
     [SerializeField] private float _maxLookDownAngle;
+    private bool                   _isMoving = false;
+    private bool                   _isSoundOn = false;
 
     private CharacterController _controller;
     private Transform           _head;
@@ -72,8 +74,12 @@ public class Movement : MonoBehaviour
         _head.localEulerAngles = _headRotation;
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
+
+        if (Time.timeScale == 0)
+            return;
+
         UpdateVelocity();
         UpdatePosition();
     }
@@ -83,15 +89,38 @@ public class Movement : MonoBehaviour
         float forwardAxis   = Input.GetAxis("Forward");
         float strafeAxis    = Input.GetAxis("Strafe");
 
+        if (_isSoundOn && _isMoving)
+        {
+            AudioManager.Instance.PlaySFX(5);
+            _isSoundOn = false;
+        }
+
         if (forwardAxis >= 0f)
+        {
             _velocity.z = forwardAxis * _maxForwardSpeed;
+            _isMoving = true;
+        }
         else
+        {
             _velocity.z = forwardAxis * _maxBackwardSpeed;
+            _isMoving = true;
+        }
 
         _velocity.x = strafeAxis * _maxStrafeSpeed;
 
         if (_velocity.magnitude > _maxForwardSpeed)
+        {
             _velocity = _velocity.normalized * (forwardAxis > 0 ? _maxForwardSpeed : _maxBackwardSpeed);
+            _isMoving = true;
+
+        }
+
+        if (forwardAxis == 0f)
+        {
+            AudioManager.Instance.StopSFX(5);
+            _isSoundOn = true;
+            _isMoving = false;
+        }
     }
 
     private void UpdatePosition()

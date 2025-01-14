@@ -50,10 +50,6 @@ public class InteractionNote : MonoBehaviour
             playerMovementScript = other.GetComponent<MonoBehaviour>();
             Debug.Log("Player entered trigger zone");
 
-            MusicBox musicBox = GetComponent<MusicBox>();
-            if (musicBox != null)
-                musicBox.SetMusicBoxToTrue();
-
             // Show the interaction text when the player enters the trigger
             if (interactionText != null)
             {
@@ -103,6 +99,7 @@ public class InteractionNote : MonoBehaviour
     {
         if (isInteractionActive)
         {
+            AudioManager.Instance.PlaySFX(12);
             UnlockPlayerMovement();
             ResetCameraPosition();
             ActivateCollider(targetCollider1);
@@ -113,6 +110,7 @@ public class InteractionNote : MonoBehaviour
         }
         else
         {
+            AudioManager.Instance.PlaySFX(12);
             LockPlayerMovement();
             ChangeCameraPosition();
             DeactivateCollider(targetCollider1);

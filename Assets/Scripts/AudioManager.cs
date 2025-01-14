@@ -41,13 +41,8 @@ public class AudioManager : MonoBehaviour
 
         if (_sfxIndex < sfx.Length)
         {
-            if (_sfxIndex != 3)
-            {
-                sfx[_sfxIndex].pitch = Random.Range(0.85f, 1.1f); // to sound a little bit different
-                sfx[_sfxIndex].Play();
-            }
-            else
-                sfx[_sfxIndex].Play();
+            //sfx[_sfxIndex].pitch = Random.Range(0.85f, 1.1f); // to sound a little bit different
+            sfx[_sfxIndex].Play();
         }
     }
 
@@ -114,6 +109,14 @@ public class AudioManager : MonoBehaviour
         {
             bgm[i].Stop();
         }
+    }
+
+    public bool CheckIfSoundIsPlaying(int number)
+    {
+        if (sfx[number].isPlaying)
+            return true;
+        else
+            return false;
     }
 
     private void AllowSFX()

@@ -44,11 +44,11 @@ public class MusicPuzzle : MonoBehaviour, IPuzzle
     private bool greenGearPlaced = false;
     private bool redGearPlaced = false;
 
-    void Start()
+    private void Start()
     {
         originalRotation = objectToMove.transform.rotation;
     }
-    void Update()
+    private void Update()
     {
 
 
@@ -71,6 +71,7 @@ public class MusicPuzzle : MonoBehaviour, IPuzzle
                 Debug.Log("Green gear place hit");
                 if(InventoryManager.Instance.HasItem(GearGreenItemName) && greenGearPlaced == false)
                 {
+                    AudioManager.Instance.PlaySFX(10);
                     InventoryManager.Instance.UseItemWithString(GearGreenItemName);
                     Debug.Log("Green gear placed");
                     ActivateObject(GreenGear);
@@ -82,6 +83,7 @@ public class MusicPuzzle : MonoBehaviour, IPuzzle
                 Debug.Log("Red gear place hit");
                 if(InventoryManager.Instance.HasItem(GearRedItemName) && redGearPlaced == false)
                 {
+                    AudioManager.Instance.PlaySFX(10);
                     InventoryManager.Instance.UseItemWithString(GearRedItemName);
                     Debug.Log("Red gear placed");
                     ActivateObject(RedGear);
@@ -92,6 +94,10 @@ public class MusicPuzzle : MonoBehaviour, IPuzzle
 
         if (puzzleStarted == true && Input.GetKey(KeyCode.D) && greenGearPlaced == true && redGearPlaced == true)
         {
+            if (!AudioManager.Instance.CheckIfSoundIsPlaying(8))
+            {
+                AudioManager.Instance.PlaySFX(8);
+            }
 
             if (!topCompleted)
             {
@@ -111,6 +117,9 @@ public class MusicPuzzle : MonoBehaviour, IPuzzle
                 if (leverRotation <= -1080f) leverCompleted = true;
             }
         }
+
+        if (!Input.GetKey(KeyCode.D))
+            AudioManager.Instance.StopSFX(8);
     }
 
     public void SetPuzzleActive(bool isActive)
@@ -168,9 +177,14 @@ public class MusicPuzzle : MonoBehaviour, IPuzzle
         if (rotationCompleted == false)
         {
             Debug.Log("Starting Rotation");
+            if (!AudioManager.Instance.CheckIfSoundIsPlaying(9))
+            {
+                AudioManager.Instance.PlaySFX(9);
+            }
             Quaternion targetRotation = Quaternion.Euler(0f, rotationDistance, 0f);
-
+            float compareRotation = rotationDistance;
             objectToRotate.localRotation = Quaternion.RotateTowards(objectToRotate.localRotation, targetRotation, rotationSpeed2 * Time.deltaTime);
+
         }
     }
 

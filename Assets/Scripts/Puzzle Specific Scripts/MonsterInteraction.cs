@@ -34,16 +34,19 @@ public class MonsterInteraction : MonoBehaviour, IPuzzle
                 Debug.Log("Monster Hit");
                 if (InventoryManager.Instance.HasItem(banana))
                 {
+                    AudioManager.Instance.PlaySFX(7);
                     InventoryManager.Instance.UseItemWithString(banana);
                     foodGiven++;
                 }
                 if (InventoryManager.Instance.HasItem(cookies))
                 {
+                    AudioManager.Instance.PlaySFX(7);
                     InventoryManager.Instance.UseItemWithString(cookies);
                     foodGiven++;
                 }
                 if (InventoryManager.Instance.HasItem(apple))
                 {
+                    AudioManager.Instance.PlaySFX(7);
                     InventoryManager.Instance.UseItemWithString(apple);
                     foodGiven++;
                 }

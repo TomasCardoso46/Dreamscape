@@ -43,6 +43,8 @@ public class DoorScript : MonoBehaviour, IPuzzle
                         Debug.Log("Red lock hit");
                         if (InventoryManager.Instance.HasItem(red))
                         {
+                            AudioManager.Instance.PlaySFX(6);
+                            AudioManager.Instance.PlaySFX(14);
                             InventoryManager.Instance.UseItemWithString(red);
                             EnableFall(hit.collider.gameObject);
                             locksOpened++;
@@ -52,6 +54,8 @@ public class DoorScript : MonoBehaviour, IPuzzle
                         Debug.Log("Green lock hit");
                         if (InventoryManager.Instance.HasItem(green))
                         {
+                            AudioManager.Instance.PlaySFX(6);
+                            AudioManager.Instance.PlaySFX(14);
                             InventoryManager.Instance.UseItemWithString(green);
                             EnableFall(hit.collider.gameObject);
                             locksOpened++;
@@ -61,6 +65,8 @@ public class DoorScript : MonoBehaviour, IPuzzle
                         Debug.Log("Blue lock hit");
                         if (InventoryManager.Instance.HasItem(blue))
                         {
+                            AudioManager.Instance.PlaySFX(6);
+                            AudioManager.Instance.PlaySFX(14);
                             InventoryManager.Instance.UseItemWithString(blue);
                             EnableFall(hit.collider.gameObject);
                             locksOpened++;
@@ -70,6 +76,8 @@ public class DoorScript : MonoBehaviour, IPuzzle
                         Debug.Log("Yellow lock hit");
                         if (InventoryManager.Instance.HasItem(yellow))
                         {
+                            AudioManager.Instance.PlaySFX(6);
+                            AudioManager.Instance.PlaySFX(14);
                             InventoryManager.Instance.UseItemWithString(yellow);
                             EnableFall(hit.collider.gameObject);
                             locksOpened++;
@@ -79,6 +87,8 @@ public class DoorScript : MonoBehaviour, IPuzzle
                         Debug.Log("Purple lock hit");
                         if (InventoryManager.Instance.HasItem(purple))
                         {
+                            AudioManager.Instance.PlaySFX(6);
+                            AudioManager.Instance.PlaySFX(14);
                             InventoryManager.Instance.UseItemWithString(purple);
                             EnableFall(hit.collider.gameObject);
                             locksOpened++;
@@ -122,6 +132,7 @@ public class DoorScript : MonoBehaviour, IPuzzle
         if (rotationCompleted == false)
         {
             Debug.Log("Starting Rotation");
+            AudioManager.Instance.PlaySFX(4);
             Quaternion targetRotation = Quaternion.Euler(0f, rotationDistance, 0f);
 
             objectToRotate.localRotation = Quaternion.RotateTowards(objectToRotate.localRotation, targetRotation, rotationSpeed * Time.deltaTime);
