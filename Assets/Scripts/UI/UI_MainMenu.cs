@@ -9,6 +9,12 @@ public class UI_MainMenu : MonoBehaviour
     [SerializeField] private UI_FadeScreen fadeScreen;
 
     [SerializeField] private float loadSceneTime;
+    [SerializeField] private GameObject credits;
+
+    private void Start()
+    {
+        credits.SetActive(false);
+    }
 
     public void StartGame()
     {
@@ -22,6 +28,16 @@ public class UI_MainMenu : MonoBehaviour
         #if UNITY_EDITOR
         EditorApplication.isPlaying = false;
         #endif
+    }
+
+    public void OpenCredits()
+    {
+        credits.SetActive(true);
+    }
+
+    public void CloseCredits()
+    {
+        credits.SetActive(false);
     }
 
     private IEnumerator LoadSceneWithFadeEffect(float _delay)

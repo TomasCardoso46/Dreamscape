@@ -2,10 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+    private bool gameEnded = false;
+    [SerializeField] private string sceneName;
+    [SerializeField] private UI_FadeScreen fadeScreen;
+    [SerializeField] private TextMeshProUGUI theEnd;
+    [SerializeField] private GameObject endButton;
     [SerializeField] private Transform _itemReceivedContainer;
     [SerializeField] private GameObject _itemReceivedBg;
     [SerializeField] private GameObject _pauseMenu;
@@ -50,6 +56,8 @@ public class UIManager : MonoBehaviour
     private void Start()
     {
         //_interactionMessage = GetComponentInChildren<TextMeshProUGUI>();
+        endButton.SetActive(false);
+        theEnd.gameObject.SetActive(false);
 
         HidePSPuzzleUI();
         HidePSHintPuzzleUI();
@@ -349,5 +357,28 @@ public class UIManager : MonoBehaviour
             Time.timeScale = 1;
             HideCursor();
         }
+    }
+
+    public void StartFinalSceneUI()
+    {
+        if (!gameEnded)
+        {
+            fadeScreen.gameObject.SetActive(false);
+            fadeScreen.gameObject.SetActive(true);
+
+            fadeScreen.FadeIn();
+
+            theEnd.gameObject.SetActive(true);
+            theEnd.text = "THE END";
+
+            endButton.SetActive(true);
+        }
+        
+        gameEnded = true;
+    }
+
+    public void GoToMainMenu()
+    {
+        SceneManager.LoadScene(sceneName);
     }
 }

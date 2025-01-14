@@ -4,6 +4,7 @@ using TMPro;
 
 public class Lights : MonoBehaviour
 {
+    [SerializeField] private GameObject dLNight;
     [SerializeField] private Light ceilingLamp;
     [SerializeField] private Light exitLamp;
     [SerializeField] private Transform lightSwitch;
@@ -38,6 +39,7 @@ public class Lights : MonoBehaviour
         ceilingLamp.gameObject.SetActive(false);
         exitLamp.gameObject.SetActive(false);
         monster.SetActive(false);
+        dLNight.SetActive(false);
     }
 
     private void Update()
@@ -96,6 +98,7 @@ public class Lights : MonoBehaviour
         ceilingLamp.gameObject.SetActive(true);
         exitLamp.gameObject.SetActive(true);
         monster.SetActive(true);
+        dLNight.SetActive(true);
 
         isDark = true;
 
@@ -130,6 +133,7 @@ public class Lights : MonoBehaviour
         ceilingLamp.gameObject.SetActive(false);
         exitLamp.gameObject.SetActive(false);
         monster.SetActive(false);
+        dLNight.SetActive(false);
 
         isDark = false;
 

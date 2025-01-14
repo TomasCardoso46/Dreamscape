@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class DoorScript : MonoBehaviour, IPuzzle
 {
+    [SerializeField] private UIManager uIManager;
     private bool isPuzzleActive = false;
     private string hitTag;
     private string red = "Red Key";
@@ -22,8 +23,9 @@ public class DoorScript : MonoBehaviour, IPuzzle
     private InteractionTrigger interactionTrigger;
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
+        
         if (rotationCompleted == false)
         {
             RotateY();
