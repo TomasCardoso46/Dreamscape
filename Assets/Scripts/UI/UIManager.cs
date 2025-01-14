@@ -7,10 +7,8 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    private bool gameEnded = false;
     [SerializeField] private string sceneName;
-    [SerializeField] private UI_FadeScreen fadeScreen;
-    [SerializeField] private TextMeshProUGUI theEnd;
+    [SerializeField] private GameObject finalImage;
     [SerializeField] private GameObject endButton;
     [SerializeField] private Transform _itemReceivedContainer;
     [SerializeField] private GameObject _itemReceivedBg;
@@ -56,8 +54,8 @@ public class UIManager : MonoBehaviour
     private void Start()
     {
         //_interactionMessage = GetComponentInChildren<TextMeshProUGUI>();
+        finalImage.gameObject.SetActive(false);
         endButton.SetActive(false);
-        theEnd.gameObject.SetActive(false);
 
         HidePSPuzzleUI();
         HidePSHintPuzzleUI();
@@ -365,24 +363,12 @@ public class UIManager : MonoBehaviour
 
     public void StartFinalSceneUI()
     {
-        if (!gameEnded)
-        {
-            fadeScreen.gameObject.SetActive(false);
-            fadeScreen.gameObject.SetActive(true);
-
-            fadeScreen.FadeIn();
-
-            theEnd.gameObject.SetActive(true);
-            theEnd.text = "THE END";
-
+            finalImage.gameObject.SetActive(true);
             endButton.SetActive(true);
-        }
-        
-        gameEnded = true;
     }
 
     public void GoToMainMenu()
     {
-        SceneManager.LoadScene(sceneName);
+        Application.Quit();
     }
 }
