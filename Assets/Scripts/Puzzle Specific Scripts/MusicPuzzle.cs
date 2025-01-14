@@ -44,9 +44,12 @@ public class MusicPuzzle : MonoBehaviour, IPuzzle
     private bool greenGearPlaced = false;
     private bool redGearPlaced = false;
 
+    [SerializeField] private BoxCollider keyCollider;
+
     private void Start()
     {
         originalRotation = objectToMove.transform.rotation;
+        keyCollider.enabled = false;
     }
     private void Update()
     {
@@ -107,7 +110,11 @@ public class MusicPuzzle : MonoBehaviour, IPuzzle
             if (!nutcrackerCompleted)
             {
                 nutcracker.localPosition = Vector3.MoveTowards(nutcracker.localPosition, new Vector3(nutcracker.localPosition.x, 0.005f, nutcracker.localPosition.z), nutcrackerMoveSpeed * Time.deltaTime);
-                if (Mathf.Approximately(nutcracker.localPosition.y, 0.005f)) nutcrackerCompleted = true;
+                if (Mathf.Approximately(nutcracker.localPosition.y, 0.005f))
+                {
+                    nutcrackerCompleted = true;
+                    keyCollider.enabled = true;
+                }
             }
             if (!leverCompleted)
             {

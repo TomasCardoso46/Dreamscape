@@ -19,9 +19,13 @@ public class PinChecker : MonoBehaviour, IPuzzle
 
     [SerializeField] private float moveSpeed = 2f; // Speed for moving objects
     private bool isResetting = false;  // Flag to track if a reset is in progress
+    [SerializeField] private BoxCollider keyCollider;
+    [SerializeField] private BoxCollider gearCollider;
 
     private void Start()
     {
+        keyCollider.enabled = false;
+        gearCollider.enabled = false;
         for (int i = 0; i < numberObjects.Length; i++)
         {
             int number = i + 1;  // Assigns numbers from 1 to 9
@@ -174,6 +178,8 @@ public class PinChecker : MonoBehaviour, IPuzzle
             Quaternion targetRotation = Quaternion.Euler(0f, rotationDistance, 0f);
 
             objectToRotate.localRotation = Quaternion.RotateTowards(objectToRotate.localRotation, targetRotation, rotationSpeed * Time.deltaTime);
+            keyCollider.enabled = true;
+            gearCollider.enabled = true;
         }
     }
 }

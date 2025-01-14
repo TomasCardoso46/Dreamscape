@@ -16,9 +16,15 @@ public class Puzzle1 : MonoBehaviour, IPuzzle
     private Quaternion targetRotation; // Target rotation quaternion
     [SerializeField]
     private InteractionTrigger interactionTrigger;
+    [SerializeField] private BoxCollider keyCollider;
+    [SerializeField] private BoxCollider clipCollider;
+    [SerializeField] private BoxCollider bananaCollider;
 
     void Start()
     {
+        keyCollider.enabled = false;
+        clipCollider.enabled = false;
+        bananaCollider.enabled = false;
         if (cubes.Length != 5)
         {
             Debug.LogError("Puzzle1 requires exactly 5 cubes");
@@ -128,6 +134,9 @@ public class Puzzle1 : MonoBehaviour, IPuzzle
             animationClip2.Play("Chest_Open2");
             AudioManager.Instance.PlaySFX(0);
             AudioManager.Instance.PlaySFX(1);
+            keyCollider.enabled = true;
+            clipCollider.enabled = true;
+            bananaCollider.enabled = true;
         }
         else
         {

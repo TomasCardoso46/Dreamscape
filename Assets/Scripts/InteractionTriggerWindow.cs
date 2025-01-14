@@ -23,9 +23,11 @@ public class InteractionTriggerWindow : MonoBehaviour
     public bool canReachOut = false;
     public WindowPuzzle windowPuzzle;
     private bool hasGlasses = false;
+    [SerializeField] private BoxCollider keyCollider;
 
     private void Start()
     {
+        keyCollider.enabled = false;
         // Check if the assigned puzzleScript implements IPuzzle
         if (puzzleScript is IPuzzle)
         {
@@ -90,7 +92,6 @@ public class InteractionTriggerWindow : MonoBehaviour
     {
         if (InventoryManager.Instance.HasItem(GlassesItemName))
         {
-            InventoryManager.Instance.UseItemWithString(GlassesItemName);
             hasGlasses = true;
         }
         if (isPlayerInside && Input.GetKeyDown(KeyCode.E))
@@ -109,6 +110,7 @@ public class InteractionTriggerWindow : MonoBehaviour
     {
         if (isInteractionActive)
         {
+            keyCollider.enabled = false;
             UnlockPlayerMovement();
             ResetCameraPosition();
             ActivateCollider();
@@ -116,11 +118,13 @@ public class InteractionTriggerWindow : MonoBehaviour
             Debug.Log("Puzzle deactivated, camera reset");
             if (canReachOut == true && hasGlasses == false)
             {
+                InventoryManager.Instance.UseItemWithString(GlassesItemName);
                 windowPuzzle.DeactivateSpecifiedChild();
             }
         }
         else
         {
+            keyCollider.enabled = true;
             LockPlayerMovement();
             ChangeCameraPosition();
             DeactivateCollider();
