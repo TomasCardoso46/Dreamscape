@@ -21,6 +21,7 @@ public class DoorScript : MonoBehaviour, IPuzzle
     private float rotationSpeed;
     [SerializeField]
     private InteractionTrigger interactionTrigger;
+    
 
     // Update is called once per frame
     private void Update()
@@ -100,6 +101,7 @@ public class DoorScript : MonoBehaviour, IPuzzle
                 if (locksOpened >=5)
                 {
                     rotationCompleted = false;
+                    uIManager.StartFinalSceneUI();
                     interactionTrigger.ToggleInteraction();
                     SetPuzzleActive(false);
                 }
