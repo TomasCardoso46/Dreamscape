@@ -108,12 +108,12 @@ public class Puzzle1 : MonoBehaviour, IPuzzle
 
     private void HandleCubeSwitch()
     {
-        if (Input.GetKeyDown(KeyCode.D))
+        if (Input.GetKeyDown(KeyCode.D)&& !isRotating)
         {
             currentCubeIndex = (currentCubeIndex + 1) % cubes.Length;
             Debug.Log($"Switched to cube at index {currentCubeIndex} by pressing D");
         }
-        else if (Input.GetKeyDown(KeyCode.A))
+        else if (Input.GetKeyDown(KeyCode.A) && !isRotating)
         {
             currentCubeIndex = (currentCubeIndex - 1 + cubes.Length) % cubes.Length;
             Debug.Log($"Switched to cube at index {currentCubeIndex} by pressing A");
