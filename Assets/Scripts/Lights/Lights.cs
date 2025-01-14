@@ -9,6 +9,8 @@ public class Lights : MonoBehaviour
     [SerializeField] private Transform lightSwitch;
     [SerializeField] private Light directionalLight;
     private Material defaultSkybox;
+    [SerializeField] private Material nightSkybox;
+    [SerializeField] private GameObject monster;
 
     [SerializeField] private TextMeshProUGUI interactionText;
     private bool isTextSeen = true;
@@ -35,6 +37,7 @@ public class Lights : MonoBehaviour
 
         ceilingLamp.gameObject.SetActive(false);
         exitLamp.gameObject.SetActive(false);
+        monster.SetActive(false);
     }
 
     private void Update()
@@ -87,10 +90,11 @@ public class Lights : MonoBehaviour
         lightSwitch.transform.rotation = Quaternion.Euler(35f, 
             lightSwitch.transform.eulerAngles.y, lightSwitch.transform.eulerAngles.z);
         directionalLight.intensity = (directionalLight.intensity == 0) ? 1 : 0;
-        SetAmbientIntensityAndSkybox(0f, null);
+        SetAmbientIntensityAndSkybox(0f, nightSkybox);
 
         ceilingLamp.gameObject.SetActive(true);
         exitLamp.gameObject.SetActive(true);
+        monster.SetActive(true);
 
         isDark = true;
 
@@ -123,6 +127,7 @@ public class Lights : MonoBehaviour
         
         ceilingLamp.gameObject.SetActive(false);
         exitLamp.gameObject.SetActive(false);
+        monster.SetActive(false);
 
         isDark = false;
 
