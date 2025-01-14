@@ -15,6 +15,7 @@ TagManager:
   - BlueLock
   - YellowLock
   - PurpleLock
+  - Lever
   layers:
   - Default
   - TransparentFX

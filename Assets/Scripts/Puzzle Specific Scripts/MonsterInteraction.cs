@@ -74,7 +74,7 @@ public class MonsterInteraction : MonoBehaviour, IPuzzle
                     {
                         DeActivateObject(noFood);
                         DeActivateObject(oneFood);
-                        Destroy(hit.collider.gameObject);
+                        DeActivateObject(hit.collider.gameObject);
                         smoke.loop = false;
                         moveObjects.StartMovement();
                         Debug.Log("Monster fed.");

@@ -67,6 +67,10 @@ public class UIManager : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            StartFinalSceneUI();
+        }
         if (Input.GetKeyDown(KeyCode.I))
         {
             if (_inventory.activeSelf)

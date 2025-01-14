@@ -27,10 +27,13 @@ public class MusicPuzzle : MonoBehaviour, IPuzzle
     [SerializeField]
     private float rotationSpeed2;
     private bool rotationCompleted;
+    //private bool rotationCompleted2;
     [SerializeField]
     private Transform objectToRotate;
     [SerializeField]
     private float rotationDistance;
+    //[SerializeField]
+    //private float rotationDistance2;
     [SerializeField]
     private GameObject RedGear;
     [SerializeField]
@@ -93,6 +96,35 @@ public class MusicPuzzle : MonoBehaviour, IPuzzle
                     redGearPlaced = true;
                 }
             }
+
+            if (puzzleStarted == true && Physics.Raycast(ray, out hit) && hit.collider.CompareTag("Lever") && greenGearPlaced == true && redGearPlaced == true)
+            {
+                if (!AudioManager.Instance.CheckIfSoundIsPlaying(8))
+                {
+                    AudioManager.Instance.PlaySFX(8);
+                }
+
+                if (!topCompleted)
+                {
+                    top.localRotation = Quaternion.RotateTowards(top.localRotation, Quaternion.Euler(-85f, 0f, 0f), topRotationSpeed * Time.deltaTime);
+                    if (Mathf.Approximately(top.localRotation.eulerAngles.x, 275f)) topCompleted = true;
+                }
+                if (!nutcrackerCompleted)
+                {
+                    nutcracker.localPosition = Vector3.MoveTowards(nutcracker.localPosition, new Vector3(nutcracker.localPosition.x, 0.005f, nutcracker.localPosition.z), nutcrackerMoveSpeed * Time.deltaTime);
+                    if (Mathf.Approximately(nutcracker.localPosition.y, 0.005f))
+                    {
+                        nutcrackerCompleted = true;
+                        keyCollider.enabled = true;
+                    }
+                }
+                if (!leverCompleted)
+                {
+                    leverRotation += leverRotationSpeed * 0.02f;
+                    lever.localRotation = Quaternion.Euler(leverRotation, 0f, 0f);
+                    if (leverRotation <= -1080f) leverCompleted = true;
+                }
+        }
         }
 
         if (puzzleStarted == true && Input.GetKey(KeyCode.D) && greenGearPlaced == true && redGearPlaced == true)
@@ -194,6 +226,22 @@ public class MusicPuzzle : MonoBehaviour, IPuzzle
 
         }
     }
+
+    /*private void RotateX()
+    {
+        if (rotationCompleted2 == false)
+        {
+            Debug.Log("Starting Rotation");
+            if (!AudioManager.Instance.CheckIfSoundIsPlaying(9))
+            {
+                AudioManager.Instance.PlaySFX(9);
+            }
+            Quaternion targetRotation = Quaternion.Euler(rotationDistance2, 0f, 0f);
+            float compareRotation = rotationDistance2;
+            objectToRotate.localRotation = Quaternion.RotateTowards(objectToRotate.localRotation, targetRotation, rotationSpeed2 * Time.deltaTime);
+
+        }
+    }*/
 
     public void ActivateObject(GameObject objectToActivate)
     {
