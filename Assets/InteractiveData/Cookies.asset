@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Cookies
   m_EditorClassIdentifier: 
   itemName: Cookies
-  itemIcon: {fileID: 21300000, guid: ad5f33c392cf21347973aeda5355c19d, type: 3}
+  itemIcon: {fileID: 21300000, guid: fab94d4068024f14eb07100b18e71694, type: 3}
   itemType: 1

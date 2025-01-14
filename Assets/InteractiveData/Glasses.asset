@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6952bdc82cacce14da614dd7b045fe20, type: 3}
   m_Name: Glasses
   m_EditorClassIdentifier: 
-  itemName: Sunglasses
-  itemIcon: {fileID: 21300000, guid: ad5f33c392cf21347973aeda5355c19d, type: 3}
+  itemName: Glasses
+  itemIcon: {fileID: 21300000, guid: b3c8de75582a59e44a3c0bcd0a94032a, type: 3}
   itemType: 1
