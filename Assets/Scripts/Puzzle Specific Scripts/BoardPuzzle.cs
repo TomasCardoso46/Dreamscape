@@ -141,11 +141,13 @@ public class BoardPuzzle : MonoBehaviour , IPuzzle
         {
             Debug.Log("Sequence is correct!");
             isPuzzleOver = true;
+            AudioManager.Instance.PlaySFX(1);
             StartCoroutine(ShowFinalPuzzleCO());
         }
         else
         {
             Debug.Log("Sequence is incorrect.");
+            AudioManager.Instance.PlaySFX(2);
         }
     }
 

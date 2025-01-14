@@ -8,6 +8,7 @@ public class Interactive : MonoBehaviour
     {
         Debug.Log($"Interacted with {itemData.itemName}");
         InventoryManager.Instance.AddItem(itemData);
+        AudioManager.Instance.PlaySFX(3);
 
         switch (itemData.itemType)
         {

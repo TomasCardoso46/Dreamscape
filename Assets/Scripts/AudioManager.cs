@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class AudioManager : MonoBehaviour
@@ -15,8 +16,8 @@ public class AudioManager : MonoBehaviour
         else 
             Destroy(gameObject);
         
-        // Starts the background sound after 4 secs
-        Invoke("AllowSFX", 4f);
+        // Starts the background sound after 2 secs
+        Invoke("AllowSFX", 2f);
     }
 
     private void Update()
@@ -40,16 +41,20 @@ public class AudioManager : MonoBehaviour
 
         if (_sfxIndex < sfx.Length)
         {
-
-            sfx[_sfxIndex].pitch = Random.Range(0.85f, 1.1f); // to sound a little bit different
-            sfx[_sfxIndex].Play();
+            if (_sfxIndex != 3)
+            {
+                sfx[_sfxIndex].pitch = Random.Range(0.85f, 1.1f); // to sound a little bit different
+                sfx[_sfxIndex].Play();
+            }
+            else
+                sfx[_sfxIndex].Play();
         }
     }
 
     public void StopSFX(int index) => sfx[index].Stop();
     public void StopBGM(int index) => sfx[index].Stop();
 
-    /*public void StopSFXWithTime(int _index) => StartCoroutine(DecreaseVolume(sfx[_index]));
+    public void StopSFXWithTime(int _index) => StartCoroutine(DecreaseVolume(sfx[_index]));
 
     private IEnumerator DecreaseVolume(AudioSource _audio)
     {
@@ -67,7 +72,7 @@ public class AudioManager : MonoBehaviour
                 break;
             }
         }
-    }*/
+    }
 
     public void PlayDayBGM()
     {

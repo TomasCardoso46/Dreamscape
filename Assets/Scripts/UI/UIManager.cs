@@ -264,7 +264,7 @@ public class UIManager : MonoBehaviour
 
     private IEnumerator CheckCombination()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
         // Compare the current combination with the correct one
         if (IsCombinationCorrect())
         {
@@ -273,6 +273,7 @@ public class UIManager : MonoBehaviour
         else
         {
             ResetCombination();
+            AudioManager.Instance.PlaySFX(2);
         }
     }
 

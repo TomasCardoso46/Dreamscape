@@ -62,5 +62,8 @@ public class ConsolePuzzle : MonoBehaviour, IPuzzle
 
         isRotating = true;
         keyCollider.enabled = true;
+
+        AudioManager.Instance.PlaySFX(1);
+        AudioManager.Instance.StopSFXWithTime(1);
     }
 }
