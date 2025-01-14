@@ -258,33 +258,29 @@ public class UIManager : MonoBehaviour
         // Check if we reached 4 inputs
         if (currentCombination.Count == 4)
         {
-            CheckCombination();
+            StartCoroutine(CheckCombination());
         }
     }
 
-    private void CheckCombination()
+    private IEnumerator CheckCombination()
     {
+        yield return new WaitForSeconds(1f);
         // Compare the current combination with the correct one
         if (IsCombinationCorrect())
         {
-            Debug.Log("I won!");
             consolePuzzle.OpenConsoleTop();
-            //console animation
         }
         else
         {
-            Debug.Log("You failed!");
             ResetCombination();
         }
-
-        // Reset after checking
-        //ResetCombination();
     }
 
     private bool IsCombinationCorrect()
     {
         // Check if the current combination matches the correct one
-        if (currentCombination.Count != correctCombination.Count) return false;
+        if (currentCombination.Count != correctCombination.Count) 
+            return false;
 
         for (int i = 0; i < correctCombination.Count; i++)
         {

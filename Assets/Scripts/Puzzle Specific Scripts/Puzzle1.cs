@@ -126,6 +126,7 @@ public class Puzzle1 : MonoBehaviour, IPuzzle
         {
             interactionTrigger.ToggleInteraction();
             animationClip2.Play("Chest_Open2");
+            AudioManager.Instance.PlaySFX(0);
         }
         else
         {
