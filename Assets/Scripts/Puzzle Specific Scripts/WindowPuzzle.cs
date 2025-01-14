@@ -5,7 +5,7 @@ public class WindowPuzzle : MonoBehaviour, IPuzzle
 {
     private bool isPuzzleActive = false;
     [SerializeField] private LayerMask interactableLayer;
-    private string ClipItemName = "PaperClip";
+    private string ClipItemName = "Paper Clip";
     public bool isWindowLocked = true;
     [SerializeField]
     private float speed = 5f; // Speed at which the object moves
@@ -28,6 +28,7 @@ public class WindowPuzzle : MonoBehaviour, IPuzzle
             {
                 if (InventoryManager.Instance.HasItem(ClipItemName))
                 {
+                    InventoryManager.Instance.UseItemWithString(ClipItemName);
                     Debug.Log("Window Unlocked");
                     Destroy(hit.collider.gameObject);
                     isWindowLocked = false;

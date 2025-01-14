@@ -4,11 +4,11 @@ public class DoorScript : MonoBehaviour, IPuzzle
 {
     private bool isPuzzleActive = false;
     private string hitTag;
-    private string red = "Key_Red";
-    private string green = "Key_Green";
-    private string blue = "Key_Blue";
-    private string yellow = "Key_Yellow";
-    private string purple = "Key_Purple";
+    private string red = "Red Key";
+    private string green = "Green Key";
+    private string blue = "Blue Key";
+    private string yellow = "Yellow Key";
+    private string purple = "Magenta Key";
     [SerializeField]
     private int locksOpened = 0;
     private bool rotationCompleted = true;
@@ -43,6 +43,7 @@ public class DoorScript : MonoBehaviour, IPuzzle
                         Debug.Log("Red lock hit");
                         if (InventoryManager.Instance.HasItem(red))
                         {
+                            InventoryManager.Instance.UseItemWithString(red);
                             EnableFall(hit.collider.gameObject);
                             locksOpened++;
                         }
@@ -51,6 +52,7 @@ public class DoorScript : MonoBehaviour, IPuzzle
                         Debug.Log("Green lock hit");
                         if (InventoryManager.Instance.HasItem(green))
                         {
+                            InventoryManager.Instance.UseItemWithString(green);
                             EnableFall(hit.collider.gameObject);
                             locksOpened++;
                         }
@@ -59,6 +61,7 @@ public class DoorScript : MonoBehaviour, IPuzzle
                         Debug.Log("Blue lock hit");
                         if (InventoryManager.Instance.HasItem(blue))
                         {
+                            InventoryManager.Instance.UseItemWithString(blue);
                             EnableFall(hit.collider.gameObject);
                             locksOpened++;
                         }
@@ -67,6 +70,7 @@ public class DoorScript : MonoBehaviour, IPuzzle
                         Debug.Log("Yellow lock hit");
                         if (InventoryManager.Instance.HasItem(yellow))
                         {
+                            InventoryManager.Instance.UseItemWithString(yellow);
                             EnableFall(hit.collider.gameObject);
                             locksOpened++;
                         }
@@ -75,6 +79,7 @@ public class DoorScript : MonoBehaviour, IPuzzle
                         Debug.Log("Purple lock hit");
                         if (InventoryManager.Instance.HasItem(purple))
                         {
+                            InventoryManager.Instance.UseItemWithString(purple);
                             EnableFall(hit.collider.gameObject);
                             locksOpened++;
                         }

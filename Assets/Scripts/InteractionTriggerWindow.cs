@@ -13,7 +13,7 @@ public class InteractionTriggerWindow : MonoBehaviour
     public TextMeshProUGUI interactionText;  // Reference to the UI Text component
 
     private bool isPlayerInside = false;
-    [SerializeField] private string GlassesItemName = "Glasses";
+    [SerializeField] private string GlassesItemName = "Sunglasses";
     private bool isInteractionActive = false;
     private Vector3 originalCameraPosition;
     private Quaternion originalCameraRotation;
@@ -90,6 +90,7 @@ public class InteractionTriggerWindow : MonoBehaviour
     {
         if (InventoryManager.Instance.HasItem(GlassesItemName))
         {
+            InventoryManager.Instance.UseItemWithString(GlassesItemName);
             hasGlasses = true;
         }
         if (isPlayerInside && Input.GetKeyDown(KeyCode.E))

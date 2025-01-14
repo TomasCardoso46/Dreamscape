@@ -79,4 +79,16 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
+    public void UseItemWithString(string itemName)
+    {
+        foreach (ItemData item in inventory)
+        {
+            if (item.itemName == itemName)
+            {
+                RemoveItem(item);
+                break;
+            }
+        }
+    }
+
 }

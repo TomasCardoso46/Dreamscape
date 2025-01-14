@@ -37,8 +37,8 @@ public class MusicPuzzle : MonoBehaviour, IPuzzle
     private GameObject YellowGear;
     [SerializeField]
     private GameObject GreenGear;
-    private string GearGreenItemName = "EngrenagemVerde";
-    private string GearRedItemName = "EngrenagemVermelha";
+    private string GearGreenItemName = "Green Gear";
+    private string GearRedItemName = "Red Gear";
     [SerializeField]
     private bool puzzleStarted = false;
     private bool greenGearPlaced = false;
@@ -71,6 +71,7 @@ public class MusicPuzzle : MonoBehaviour, IPuzzle
                 Debug.Log("Green gear place hit");
                 if(InventoryManager.Instance.HasItem(GearGreenItemName) && greenGearPlaced == false)
                 {
+                    InventoryManager.Instance.UseItemWithString(GearGreenItemName);
                     Debug.Log("Green gear placed");
                     ActivateObject(GreenGear);
                     greenGearPlaced = true;
@@ -81,6 +82,7 @@ public class MusicPuzzle : MonoBehaviour, IPuzzle
                 Debug.Log("Red gear place hit");
                 if(InventoryManager.Instance.HasItem(GearRedItemName) && redGearPlaced == false)
                 {
+                    InventoryManager.Instance.UseItemWithString(GearRedItemName);
                     Debug.Log("Red gear placed");
                     ActivateObject(RedGear);
                     redGearPlaced = true;

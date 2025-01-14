@@ -9,6 +9,7 @@ public class MonsterInteraction : MonoBehaviour, IPuzzle
     private bool isPuzzleActive = false;
     private string banana = "Banana";
     private string cookies = "Cookies";
+    private string apple = "Apple";
     [SerializeField]
     private ParticleSystem smoke;
     [SerializeField]
@@ -27,8 +28,11 @@ public class MonsterInteraction : MonoBehaviour, IPuzzle
             if (Physics.Raycast(ray, out hit) && hit.collider.CompareTag("Monster"))
             {
                 Debug.Log("Monster Hit");
-                if (InventoryManager.Instance.HasItem(banana) && InventoryManager.Instance.HasItem(cookies))
+                if (InventoryManager.Instance.HasItem(banana) && InventoryManager.Instance.HasItem(cookies) && InventoryManager.Instance.HasItem(apple))
                 {
+                    InventoryManager.Instance.UseItemWithString(banana);
+                    InventoryManager.Instance.UseItemWithString(cookies);
+                    InventoryManager.Instance.UseItemWithString(apple);
                     DeActivateObject(noFood);
                     DeActivateObject(oneFood);
                     Destroy(hit.collider.gameObject);
@@ -38,8 +42,14 @@ public class MonsterInteraction : MonoBehaviour, IPuzzle
                     interactionTrigger.ToggleInteraction();
                     SetPuzzleActive(false); // Deactivate puzzle after destroying monster
                 }
-                else if (InventoryManager.Instance.HasItem(banana) || InventoryManager.Instance.HasItem(cookies))
+                else if (InventoryManager.Instance.HasItem(banana) || InventoryManager.Instance.HasItem(cookies) || InventoryManager.Instance.HasItem(apple))
                 {
+                    if (InventoryManager.Instance.HasItem(banana))
+                        InventoryManager.Instance.UseItemWithString(banana);
+                    if (InventoryManager.Instance.HasItem(cookies))
+                        InventoryManager.Instance.UseItemWithString(cookies);
+                    if (InventoryManager.Instance.HasItem(apple))
+                        InventoryManager.Instance.UseItemWithString(apple);
                     DeActivateObject(noFood);
                     ActivateObject(oneFood);
                     Debug.Log("Needs more food");
