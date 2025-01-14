@@ -16,6 +16,8 @@ public class MonsterInteraction : MonoBehaviour, IPuzzle
     private InteractionTrigger interactionTrigger;
     [SerializeField]
     private MoveObjects moveObjects;
+    [SerializeField]
+    private int foodGiven = 0;
     void Update()
     {
         
@@ -27,38 +29,61 @@ public class MonsterInteraction : MonoBehaviour, IPuzzle
 
             if (Physics.Raycast(ray, out hit) && hit.collider.CompareTag("Monster"))
             {
+
+
                 Debug.Log("Monster Hit");
-                if (InventoryManager.Instance.HasItem(banana) && InventoryManager.Instance.HasItem(cookies) && InventoryManager.Instance.HasItem(apple))
+                if (InventoryManager.Instance.HasItem(banana))
                 {
                     InventoryManager.Instance.UseItemWithString(banana);
+                    foodGiven++;
+                }
+                if (InventoryManager.Instance.HasItem(cookies))
+                {
                     InventoryManager.Instance.UseItemWithString(cookies);
+                    foodGiven++;
+                }
+                if (InventoryManager.Instance.HasItem(apple))
+                {
                     InventoryManager.Instance.UseItemWithString(apple);
-                    DeActivateObject(noFood);
-                    DeActivateObject(oneFood);
-                    Destroy(hit.collider.gameObject);
-                    smoke.loop = false;
-                    moveObjects.StartMovement();
-                    Debug.Log("Monster fed.");
-                    interactionTrigger.ToggleInteraction();
-                    SetPuzzleActive(false); // Deactivate puzzle after destroying monster
+                    foodGiven++;
                 }
-                else if (InventoryManager.Instance.HasItem(banana) || InventoryManager.Instance.HasItem(cookies) || InventoryManager.Instance.HasItem(apple))
+
+                switch (foodGiven)
                 {
-                    if (InventoryManager.Instance.HasItem(banana))
-                        InventoryManager.Instance.UseItemWithString(banana);
-                    if (InventoryManager.Instance.HasItem(cookies))
-                        InventoryManager.Instance.UseItemWithString(cookies);
-                    if (InventoryManager.Instance.HasItem(apple))
-                        InventoryManager.Instance.UseItemWithString(apple);
-                    DeActivateObject(noFood);
-                    ActivateObject(oneFood);
-                    Debug.Log("Needs more food");
+                    case 0:
+                    {
+                        ActivateObject(noFood);
+                        break;
+                    }
+                    case 1:
+                    {
+                        DeActivateObject(noFood);
+                        ActivateObject(oneFood);
+                        break;
+                    }
+                    case 2:
+                    {
+                        DeActivateObject(noFood);
+                        ActivateObject(oneFood);
+                        break;
+                    }
+                    case 3:
+                    {
+                        DeActivateObject(noFood);
+                        DeActivateObject(oneFood);
+                        Destroy(hit.collider.gameObject);
+                        smoke.loop = false;
+                        moveObjects.StartMovement();
+                        Debug.Log("Monster fed.");
+                        interactionTrigger.ToggleInteraction();
+                        SetPuzzleActive(false); // Deactivate puzzle after destroying monster
+                        break;
+                    }
+                    
+                    
                 }
-                else
-                {
-                    ActivateObject(noFood);
-                    Debug.Log("No food");
-                }
+            
+                
 
             }
         }
